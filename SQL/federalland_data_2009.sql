@@ -1,0 +1,17 @@
+﻿INSERT INTO federalland (name, residents, year) VALUES
+	('Schleswig-Holstein', 2198777, 2009),
+	('Mecklenburg-Vorpommern', 1418790, 2009),
+	('Hamburg', 1230717, 2009),
+	('Niedersachsen', 6083041, 2009),
+	('Bremen', 486475, 2009),
+	('Brandenburg', 2128352, 2009),
+	('Sachsen-Anhalt', 2088108, 2009),
+	('Berlin', 2438902, 2009),
+	('Nordrhein-Westfalen', 13257047, 2009),
+	('Sachsen', 3561357, 2009),
+	('Hessen', 4366988, 2009),
+	('Thüringen', 1957755, 2009),
+	('Rheinland-Pfalz', 3084171, 2009),
+	('Bayern', 9222560, 2009),
+	('Baden-Württemberg', 7529193, 2009),
+	('Saarland', 818478, 2009)
