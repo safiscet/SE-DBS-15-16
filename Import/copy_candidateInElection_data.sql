@@ -1,0 +1,2 @@
+﻿COPY candidateInElection (candidate, year, rank, party, wahlkreis, federalland) FROM 'C:/Users/Tabea/Documents/Uni Master/1. Semester/Datenbanksysteme/SE-DBS-15-16-master/SE-DBS-15-16-master/Import/candidateInElection_data.csv'
+ DELIMITERS ';' CSV HEADER;
