@@ -63,6 +63,7 @@ create table CandidateInElection (
 	rank		smallint,
 	party		smallint	references Party(id),
 	wahlkreis	smallint	references Wahlkreis(id),
+	federalLand 	smallint 	references federalland(id),
 	primary key (candidate, year) 
 );
 	
