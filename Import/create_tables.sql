@@ -14,8 +14,8 @@ create table Vote (
 
 create table Party (
 	id		smallint	primary key,
-	name		varchar(30)	not null,
-	abkuerzung	varchar(10)	not null
+	name		varchar(100)	not null,
+	abkuerzung	varchar(30)	not null
 );
 
 create table PartyInElection (
@@ -69,5 +69,6 @@ create table CandidateInElection (
 create table RunsForElection (
 	federalLand	smallint	references FederalLand(id),
 	party		smallint	references Party(id),
-	primary key (federalLand, party) 
+	year		smallint	not null,
+	primary key (federalLand, party, year) 
 );
