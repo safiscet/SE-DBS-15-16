@@ -4,3 +4,8 @@
 *.classpath
 
 *.project
+
+generatedVotes2009.csv
+generatedVotes2013.csv
+missingCandidates2009.txt
+missingCandidates2013.txt
