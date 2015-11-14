@@ -1,6 +1,6 @@
 ﻿DROP MATERIALIZED VIEW IF EXISTS partyinfederalland;
 
-CREATE MATERIALIZED VIEW partyinfederalland AS (
+CREATE MATERIALIZED VIEW partyinfederalland (party, year, federalland, erststimmen, zweitstimmen) AS (
 
 	WITH wahlfed AS (
 		SELECT w.id AS wahlkreis, f.id AS federalland
@@ -8,7 +8,7 @@ CREATE MATERIALIZED VIEW partyinfederalland AS (
 		WHERE w.federalland = f.id
 	)
 
-	SELECT p.party, p.year, w.federalland, SUM(p.erststimmen) AS erststimmen, SUM(p.zweitstimmen) AS zweitstimmen
+	SELECT p.party, p.year, w.federalland, CAST(SUM(p.erststimmen) AS bigint) AS erststimmen, CAST(SUM(p.zweitstimmen) AS bigint) AS zweitstimmen
 	FROM partyinwahlkreis p, wahlfed w
 	WHERE p.wahlkreis = w.wahlkreis
 	GROUP BY p.party, p.year, w.federalland
