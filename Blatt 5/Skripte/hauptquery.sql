@@ -30,3 +30,14 @@ insert into changedivisorParty2013 (federalland, party, zweitstimmen)
 
 --change the number of seats per party according to the number of calculated seats
 select * from changeNumberOfSeatsParty();
+
+--insert party, zweitstimmen into changedDivisorRaiseParty2013
+insert into changedivisorraiseparty2013 (party, zweitstimmen)
+ (select pie.party, pie.zweitstimmen 
+ from partyinelection pie
+ where pie.year = 2013 and pie.fivePercentTaken = true
+ and pie.zweitstimmen > 0
+ order by party);
+
+-- Erhöhung der Gesamtzahl der Sitze für die Parteien
+select * from raiseNumberOfSeatsParty();

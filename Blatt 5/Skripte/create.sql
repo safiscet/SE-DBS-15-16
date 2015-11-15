@@ -17,3 +17,9 @@ changeByHalfSeat decimal(5,1), divisorCandidate1 decimal(20, 6),
 changeByOneAndHalfSeat decimal(5,1), divisorCandidate2 decimal(20, 6), 
 resultingDivisor decimal(20, 6), seats int, primary key(federalland, party));
 
+--table for raising the number of seats for the parties
+create table changeDivisorRaiseParty2013 (party int primary key, zweitstimmen int, 
+changeByHalfSeat decimal(5,1), divisorCandidate1 decimal(20, 6), 
+changeResultingByHalfSeat decimal(5,1), divisorCandidate2 decimal(20, 6), 
+resultingDivisor decimal(20, 6), seats int);
+
