@@ -1,13 +1,32 @@
-﻿/*begin divisor: total residents divided by 598*/
+﻿--begin divisor: total residents divided by 598
 with divisorBegin as (select sum(residents2013)/598.00 from federalland)
 
 
-/* insert id, residents2013, first calculated seats */
+--insert id, residents2013, first calculated seats 
 insert into firstSeatsFederalLand (select id, residents2013, round(residents2013/(select * from divisorBegin)) as seats from federalland);
 insert into changedivisorfederalland2013 (id, residents2013) (select id, residents2013 from firstSeatsFederalLand);
 
 
-/* change the number of seats per federalland according to the number of calculated seats*/
+--change the number of seats per federalland according to the number of calculated seats
 select * from changeNumberOfSeats();
 
-/*distribute the seats per federalland to the parties according to their zweitstimmen*/
+--set the winner party for each wahlkreis in the relation wahlkreisinelection
+select * from setWinnerParty();
+
+--distribute the seats per federalland to the parties according to their zweitstimmen
+select * from findInitialNumberOfSeatsParty();
+
+--update the number of wonDistricts and fivePercentTaken in the relation partyInElection
+--select * from updateWonDistrictsAndFivePercent();
+
+--insert federalland, party, zweitstimmen
+insert into changedivisorParty2013 (federalland, party, zweitstimmen)
+ (select pf.federalland, pf.party, pf.zweitstimmen 
+ from partyinfederalland pf, partyinelection pie
+ where pf.party = pie.party and pf.year = 2013
+ and pie.year = 2013 and pie.fivePercentTaken = true
+ and pf.zweitstimmen > 0
+ order by federalland, party);
+
+--change the number of seats per party according to the number of calculated seats
+select * from changeNumberOfSeatsParty();
