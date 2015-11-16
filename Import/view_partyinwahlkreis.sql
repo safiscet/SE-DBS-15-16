@@ -38,8 +38,10 @@ CREATE MATERIALIZED VIEW partyinwahlkreis AS (
 		ORDER BY erst.party, erst.year, erst.wahlkreis
 	)
 
-	SELECT r.party, r.year, r.wahlkreis, r.erststimmen, r.zweitstimmen, (r.party = w.winnerparty) AS won
-	FROM result r, wahlkreisinelection w
+	SELECT r.party, r.year, r.wahlkreis, r.erststimmen, r.zweitstimmen, (r.party = c.party) AS won
+	FROM result r, wahlkreisinelection w, candidateinelection c
 	WHERE r.wahlkreis = w.wahlkreis
+	AND w.year = c.year
+	AND w.winnercandidate = c.candidate
 	AND r.year = w.year
 );
