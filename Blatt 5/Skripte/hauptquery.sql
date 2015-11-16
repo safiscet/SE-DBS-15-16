@@ -1,14 +1,17 @@
 ﻿delete from firstSeatsFederalLand;
 delete from changedivisorfederalland2013;
+delete from firstSeatsParty2013;
+delete from changedivisorparty2013;
+delete from changedivisorraiseparty2013;
 
 --begin divisor: total residents divided by 598
 with divisorBegin as (select sum(residents)/598.00 
-from federallandandresidents where year = 2013)
+from federallandsresidents where year = 2013)
 
 
 --insert id, residents, first calculated seats 
 insert into firstSeatsFederalLand (select id, residents, round(residents/(select * from divisorBegin)) as seats 
-from federallandandresidents where year = 2013);
+from federallandsresidents where year = 2013);
 insert into changedivisorfederalland2013 (id, residents2013) 
 (select id, residents2013 from firstSeatsFederalLand);
 

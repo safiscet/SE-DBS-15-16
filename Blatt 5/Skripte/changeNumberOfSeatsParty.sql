@@ -10,7 +10,7 @@ BEGIN
     /* if number of calculated seats is to low, the divisor has to be set down */
     IF (select sum(seats) from firstSeatsParty2013 where federalland = r) < 
 		(select seats from changedivisorfederalland2013 where id = r) THEN
-	perform updatehalfseatsUpParty();
+	perform updatehalfseatsUpParty(r);
 	FOR t IN SELECT DISTINCT party FROM changedivisorparty2013
         LOOP
         update changeDivisorParty2013 set
@@ -37,12 +37,12 @@ BEGIN
 	(select max(greatest) from (select greatest(divisorcandidate1, divisorcandidate2) 
 	from changedivisorparty2013 where federalland = r) as tmp), r);
 	/*update the final number of seats*/
-	perform updateFinalSeatsParty();
+	perform updateFinalSeatsParty(r);
 
     /* if number of calculated seats is to big, the divisor has to be set up */
     ELSIF (select sum(seats) from firstSeatsParty2013 where federalland = r) > 
 		(select seats from changedivisorfederalland2013 where id = r) THEN
-	perform updatehalfseatsDownParty();
+	perform updatehalfseatsDownParty(r);
 	FOR u IN SELECT DISTINCT party FROM changedivisorparty2013
         LOOP
         update changeDivisorParty2013 set
@@ -71,17 +71,18 @@ BEGIN
 	from changeDivisorParty2013
 	where federalland = r) as tmp), r);
 	/*update the final number of seats*/
-	perform updateFinalSeatsParty();
+	perform updateFinalSeatsParty(r);
 
     /* if number of calculated seats is exactly 598, the number of seats is updated in changeDivisorParty2013 */
-    ELSE 
-        FOR s IN SELECT federalland FROM changeDivisorParty2013
+    ELSIF (select sum(seats) from firstSeatsParty2013 where federalland = r) = 
+		(select seats from changedivisorfederalland2013 where id = r) THEN
+        FOR s IN SELECT DISTINCT party FROM changeDivisorParty2013
         LOOP
 		update changeDivisorParty2013 set
-		seats = (select seats from firstSeatsParty2013 f where f.federalland = r
-		and f.party = s)
+		seats = (select seats from firstSeatsParty2013 f 
+		where f.federalland = r and f.party = s)
 		where party = s and federalland = r;
-        END LOOP;
+        END LOOP;        
     END IF;
     END LOOP;
 END;

@@ -1,15 +1,26 @@
-﻿CREATE OR REPLACE FUNCTION updateHalfSeatsDownParty() RETURNS void AS $$
+﻿CREATE OR REPLACE FUNCTION updateHalfSeatsDownParty(federallandID INT) RETURNS void AS $$
 DECLARE
-    r integer;
+    s integer;
 BEGIN
-    FOR r IN SELECT federalland FROM changeDivisorParty2013
-    LOOP
-	update changeDivisorParty2013 c set
-        changebyhalfseat = (select f.seats -0.5 from firstSeatsParty2013 f 
-        where f.federalland = r and f.party = c.party),
-	changebyoneandhalfseat = (select f.seats -1.5 from firstSeatsParty2013 f 
-	where f.federalland = r and f.party = c.party)
-	where c.federalland = r;
-    END LOOP;
+	FOR s IN SELECT DISTINCT party FROM changeDivisorParty2013
+	LOOP
+		IF (select f.seats -0.5 from firstSeatsParty2013 f
+			where f.federalland = federallandID and f.party = s) >= 0 THEN
+		update changeDivisorParty2013 set
+			changebyhalfseat = (select f.seats -0.5 
+			from firstSeatsParty2013 f
+			where f.federalland = federallandID and f.party = s)
+		where federalland = federallandID and party = s;
+		END IF;
+
+		IF (select f.seats -1.5 from firstSeatsParty2013 f
+			where f.federalland = federallandID and f.party = s) >= 0 THEN
+		update changeDivisorParty2013 set
+			changebyoneandhalfseat = (select f.seats -1.5 
+			from firstSeatsParty2013 f
+			where f.federalland = federallandID and f.party = s)
+		where federalland = federallandID and party = s;
+		END IF;
+	END LOOP;
 END;
 $$ LANGUAGE plpgsql;
