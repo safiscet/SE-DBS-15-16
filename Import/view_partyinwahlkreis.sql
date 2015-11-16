@@ -27,12 +27,19 @@ CREATE MATERIALIZED VIEW partyinwahlkreis AS (
 			WHERE p.party = v.zweitstimme
 			AND p.year = v.year
 			GROUP BY p.party, v.wahlkreis, p.year
+	),
+
+	result AS (
+		SELECT erst.party, erst.year, erst.wahlkreis, erst.erststimmen, COALESCE(zweit.zweitstimmen,0) AS zweitstimmen
+		FROM partyErst erst LEFT OUTER JOIN partyZweit zweit
+		ON erst.party = zweit.party
+		AND erst.year = zweit.year
+		AND erst.wahlkreis = zweit.wahlkreis
+		ORDER BY erst.party, erst.year, erst.wahlkreis
 	)
 
-	SELECT erst.party, erst.year, erst.wahlkreis, erst.erststimmen, COALESCE(zweit.zweitstimmen,0) AS zweitstimmen
-	FROM partyErst erst LEFT OUTER JOIN partyZweit zweit
-	ON erst.party = zweit.party
-	AND erst.year = zweit.year
-	AND erst.wahlkreis = zweit.wahlkreis
-	ORDER BY erst.party, erst.year, erst.wahlkreis
+	SELECT r.party, r.year, r.wahlkreis, r.erststimmen, r.zweitstimmen, (r.party = w.winnerparty) AS won
+	FROM result r, wahlkreisinelection w
+	WHERE r.wahlkreis = w.wahlkreis
+	AND r.year = w.year
 );
