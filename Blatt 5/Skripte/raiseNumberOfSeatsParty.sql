@@ -6,17 +6,19 @@ DECLARE
     t integer;
     u integer;
 BEGIN
+    -- update minSeats column
+    UPDATE changeDivisorRaiseParty2013 ch
+    set minSeats = old.minSeats
+    FROM (
+	select mind.party, COALESCE(SUM(mind.seats),0) AS minSeats
+	from changedivisorParty2013 mind
+	group by mind.party
+    ) old
+    WHERE ch.party = old.party;
 
     -- compute the first divisor for every party
        update changeDivisorRaiseParty2013 ch
-       set changeByHalfSeat = (old.minSeats - 0.5)
-       from (
-	  select mind.party, COALESCE(SUM(mind.seats),0) AS minSeats
-	  from changedivisorParty2013 mind
-	  group by mind.party
-       ) old
-       where ch.party = old.party
-       and r = ch.party;
+       set changeByHalfSeat = minSeats - 0.5;
 
        update changeDivisorRaiseParty2013 ch
        set divisorCandidate1 = cast(zweitstimmen
@@ -40,7 +42,11 @@ BEGIN
 
     -- update the raised number of seats with the final divisor
 	update changeDivisorRaiseParty2013
-	set seats = zweitstimmen / resultingdivisor;
+	set seats = round(zweitstimmen / resultingdivisor);
+
+    -- compute the ausgleichsmandate
+	update changeDivisorRaiseParty2013
+	SEt ausgleichsmandate = seats - minSeats;
     
 END;
 $$ LANGUAGE plpgsql;
