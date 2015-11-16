@@ -46,7 +46,7 @@ BEGIN
 
     -- compute the ausgleichsmandate
 	update changeDivisorRaiseParty2013
-	SEt ausgleichsmandate = seats - minSeats;
+	set ausgleichsmandate = seats - minSeats;
     
 END;
 $$ LANGUAGE plpgsql;

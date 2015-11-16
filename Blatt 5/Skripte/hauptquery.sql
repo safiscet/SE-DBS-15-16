@@ -48,5 +48,8 @@ insert into changedivisorraiseparty2013 (party, zweitstimmen)
  and pie.zweitstimmen > 0
  order by party);
 
--- Erhöhung der Gesamtzahl der Sitze für die Parteien
+-- raise the number of seats for the parties
 select * from raiseNumberOfSeatsParty();
+
+-- initialize the final seat allocation per federal land of the parties (beginDivisor and maximum of ratio and wahlkreis seats)
+select * from initializeFinalSeatsPerParty();

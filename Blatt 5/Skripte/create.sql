@@ -24,3 +24,15 @@ changeByHalfSeat decimal(5,1), divisorCandidate1 decimal(20, 6),
 changeResultingByHalfSeat decimal(5,1), divisorCandidate2 decimal(20, 6), 
 resultingDivisor decimal(20, 6), seats int, ausgleichsmandate int);
 
+--table with begin divisor and resulting seats per party and federalland
+create table firstSeatsPartyFinal2013 (
+	federalland smallint references federalland(id),
+	party smallint references party(id),
+	zweitstimmen int,
+	begindivisor decimal(12, 6),
+	ratioSeats int,
+	kreisSeats int,
+	seats int,
+	primary key (federalland, party)
+);
+
