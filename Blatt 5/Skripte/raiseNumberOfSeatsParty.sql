@@ -1,13 +1,13 @@
 ﻿CREATE OR REPLACE FUNCTION raiseNumberOfSeatsParty() RETURNS void AS $$
+    
 DECLARE
     r integer;
     s integer;
     t integer;
     u integer;
 BEGIN
-    FOR r IN SELECT DISTINCT party FROM changeDivisorRaiseParty2013
+
     -- compute the first divisor for every party
-        LOOP
        update changeDivisorRaiseParty2013 ch
        set changeByHalfSeat = (old.minSeats - 0.5)
        from (
@@ -20,29 +20,27 @@ BEGIN
 
        update changeDivisorRaiseParty2013 ch
        set divisorCandidate1 = cast(zweitstimmen
-		/(changeByHalfSeat) as decimal(20, 6))
-	where party = r;
+		/(changeByHalfSeat) as decimal(20, 6));
    
-    END LOOP;
 
     -- compute the second divisor for every party
-    FOR r IN SELECT DISTINCT party FROM changeDivisorRaiseParty2013
-	LOOP
 	update changeDivisorRaiseParty2013 ch
-	set changeResultingByHalfSeat = t.seats + 0.5
+	set changeResultingByHalfSeat = (round(cast((ch.zweitstimmen / t.minDiv) as decimal(20, 6)))) + 0.5
 	FROM (
-	   select ch1.party, round(cast((zweitstimmen / (select min(ch.divisorCandidate1) from changeDivisorRaiseParty2013 ch2)) as decimal(20, 6))) AS seats
+	   select min(ch1.divisorCandidate1) AS minDiv
 	   from changeDivisorRaiseParty2013 ch1
-	) t
-	where r = t.party;
+	) t;
 
 	update changeDivisorRaiseParty2013 ch
 	set divisorCandidate2 = cast(zweitstimmen
-		/(changeResultingByHalfSeat) as decimal(20, 6))
-	where party = r;
-    END LOOP;
+		/(changeResultingByHalfSeat) as decimal(20, 6));
 
     -- compute the resulting divisor: max(divisorCandidate2) < resulting divisor <= min(divisorCandidate)
+    perform getFinalDivisorRaiseParty((select max(divisorCandidate2) from changeDivisorRaiseParty2013), (select min(divisorCandidate1) from changeDivisorRaiseParty2013));
+
+    -- update the raised number of seats with the final divisor
+	update changeDivisorRaiseParty2013
+	set seats = zweitstimmen / resultingdivisor;
     
 END;
 $$ LANGUAGE plpgsql;
