@@ -1,8 +1,10 @@
 ﻿WITH partyWinCount AS (
 	SELECT p.party, p.year, COUNT(w.winnerparty)
-	FROM partyinelection p, wahlkreisinelection w
-	WHERE p.party = w.winnerparty
+	FROM partyinelection p, wahlkreisinelection w, candidateinelection c
+	WHERE w.winnercandidate = c.candidate
+	AND p.party = c.party
 	AND w.year = p.year
+	AND w.year = c.year
 	GROUP BY p.party, p.year
 ),
 
