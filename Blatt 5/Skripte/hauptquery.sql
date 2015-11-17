@@ -40,6 +40,9 @@ insert into changedivisorParty2013 (federalland, party, zweitstimmen)
 --change the number of seats per party according to the number of calculated seats
 select * from changeNumberOfSeatsParty();
 
+--insert the maximum of calculated seats and won wahlkreise for each party
+select * from maxFromSeatsAndWahlkreis();
+
 --insert party, zweitstimmen into changedDivisorRaiseParty2013
 insert into changedivisorraiseparty2013 (party, zweitstimmen)
  (select pie.party, pie.zweitstimmen 
