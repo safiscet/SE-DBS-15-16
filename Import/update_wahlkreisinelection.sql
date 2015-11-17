@@ -15,7 +15,7 @@ AND m.year = c.year
 )
 
 UPDATE wahlkreisinelection w
-SET winnercandidate = win.candidate,
+SET winnercandidate = win.candidate
 -- alt: winnerparty = win.party,
 FROM wahlkreisWinner win
 WHERE w.wahlkreis = win.wahlkreis

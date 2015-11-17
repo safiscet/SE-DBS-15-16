@@ -52,4 +52,4 @@ insert into changedivisorraiseparty2013 (party, zweitstimmen)
 select * from raiseNumberOfSeatsParty();
 
 -- initialize the final seat allocation per federal land of the parties (beginDivisor and maximum of ratio and wahlkreis seats)
-select * from initializeFinalSeatsPerParty();
+--select * from initializeFinalSeatsPerParty();
