@@ -1,4 +1,4 @@
-﻿DROP MATERIALIZED VIEW IF EXISTS partyinfederalland;
+﻿DROP MATERIALIZED VIEW IF EXISTS partyinfederalland CASCADE;
 
 CREATE MATERIALIZED VIEW partyinfederalland (party, year, federalland, erststimmen, zweitstimmen) AS (
 
@@ -9,10 +9,9 @@ CREATE MATERIALIZED VIEW partyinfederalland (party, year, federalland, erststimm
 	),
 
 	wonDistricts AS (
-		SELECT p.party, w.federalland, p.year, COUNT(p.won) AS wonDistricts
+		SELECT p.party, w.federalland, p.year, SUM(p.won::int) AS wonDistricts
 		FROM partyinwahlkreis p, wahlfed w
 		WHERE p.wahlkreis = w.wahlkreis
-		AND p.won = TRUE
 		GROUP BY p.party, w.federalland, p.year
 	)
 

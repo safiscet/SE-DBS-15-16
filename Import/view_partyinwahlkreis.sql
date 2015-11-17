@@ -1,4 +1,4 @@
-﻿DROP MATERIALIZED VIEW IF EXISTS partyinwahlkreis;
+﻿DROP MATERIALIZED VIEW IF EXISTS partyinwahlkreis CASCADE;
 
 CREATE MATERIALIZED VIEW partyinwahlkreis AS (
 	WITH canErst AS (
