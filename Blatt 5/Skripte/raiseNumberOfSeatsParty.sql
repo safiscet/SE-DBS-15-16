@@ -10,7 +10,7 @@ BEGIN
     UPDATE changeDivisorRaiseParty2013 ch
     set minSeats = old.minSeats
     FROM (
-	select mind.party, COALESCE(SUM(mind.seats),0) AS minSeats
+	select mind.party, COALESCE(SUM(mind.maxfromseatsandwahlkreis),0) AS minSeats
 	from changedivisorParty2013 mind
 	group by mind.party
     ) old

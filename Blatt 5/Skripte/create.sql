@@ -35,3 +35,20 @@ create table firstSeatsPartyFinal2013 (
 	seats int,
 	primary key (federalland, party)
 );
+
+--table for final increase or decrease of divisor and resulting final number of seats for the parties
+create table changeDivisorPartyFinal2013 (
+	party int, 
+	federalland int, 
+	zweitstimmen int, 
+	kreisseats int,
+	prevseats int,
+	changeByHalfSeat decimal(5,1), 
+	divisorCandidate1 decimal(20, 6), 
+	changeByOneAndHalfSeat decimal(5,1), 
+	divisorCandidate2 decimal(20, 6), 
+	resultingDivisor decimal(20, 6), 
+	ratioseats int, 
+	seats int,
+	primary key(federalland, party)
+)

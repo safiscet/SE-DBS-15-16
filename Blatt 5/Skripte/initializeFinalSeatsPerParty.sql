@@ -37,10 +37,7 @@ BEGIN
 
 	-- set seats to the maximum of ratioSeats and kreisSeats 
 	update firstseatspartyfinal2013
-	set seats = 	case
-			when ratioseats < kreisseats then kreisseats
-			else ratioseats
-			end;
+	set seats = greatest(ratioseats, kreisseats);
 	
 END;
 $$ LANGUAGE plpgsql;

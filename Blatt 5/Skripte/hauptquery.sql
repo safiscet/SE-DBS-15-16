@@ -3,6 +3,8 @@ delete from changedivisorfederalland2013;
 delete from firstSeatsParty2013;
 delete from changedivisorparty2013;
 delete from changedivisorraiseparty2013;
+delete from firstSeatsPartyFinal2013;
+delete from changeDivisorPartyFinal2013;
 
 --begin divisor: total residents divided by 598
 with divisorBegin as (select sum(residents)/598.00 
@@ -54,5 +56,25 @@ insert into changedivisorraiseparty2013 (party, zweitstimmen)
 -- raise the number of seats for the parties
 select * from raiseNumberOfSeatsParty();
 
+--insert party, federalland, zweitstimmen intro firstSeatsPartyFinal2013
+insert into firstSeatsPartyFinal2013 (federalland, party, zweitstimmen)
+ (select pf.federalland, pf.party, pf.zweitstimmen 
+ from partyinfederalland pf, partyinelection pie
+ where pf.party = pie.party and pf.year = 2013
+ and pie.year = 2013 and pie.fivePercentTaken = true
+ and pf.zweitstimmen > 0
+ order by federalland, party);
+
 -- initialize the final seat allocation per federal land of the parties (beginDivisor and maximum of ratio and wahlkreis seats)
---select * from initializeFinalSeatsPerParty();
+select * from initializeFinalSeatsPerParty();
+
+-- insert party, federalland, zweitstimmen, kreisseats into changeDivisorPartyFinal2013
+insert into changeDivisorPartyFinal2013 (party, federalland, zweitstimmen, kreisseats, prevseats)
+(
+	select party, federalland, zweitstimmen, kreisseats, seats
+	from firstseatspartyfinal2013
+	order by party, federalland
+);
+
+-- get the final number of seats per party
+select * from changeNumberOfSeatsPartyFinal();
