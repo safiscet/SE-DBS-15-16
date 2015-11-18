@@ -3,6 +3,7 @@
 Project of the lecture 'Datenbanksysteme' (SE).
 
 PostgreSQL: Version 9.4.5 Win (32)
+
 Node.js: Version 4.2.2 Win (32)
 
 ## Structure:
