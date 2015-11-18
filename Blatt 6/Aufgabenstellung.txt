@@ -1,0 +1,30 @@
+Q1: Sitzverteilung
+	-> Visualisierung in Tortendiagramm
+	-> Visualisierung tabellarisch (Partei, Anzahl Sitze)
+Q2: Mitglieder des Bundestags
+	-> Visualisierung als Liste
+Q3: Wahlkreisübersicht
+	-> Wahlbeteiligung, gewählter Direktkandidat, 
+	   prozentuale und absolute Anzahl an Stimmen für jede Partei, 
+	   Entwicklung der Stimmen im Vergleich zum Vorjahr
+	-> Visualisierung Wahlbeteiligung als Balkendiagramm pro Wahlkreis für beide Jahre
+	-> Visualisierung Direktkandidat tabellarisch (Wahlkreis, Kandidat) für beide Jahre
+	-> Visualisierung Anzahl Stimmen als Balkendiagramm für jede Partei für beide Jahre
+Q4: Wahlkreissieger
+	-> Siegerparteien pro Wahlkreis (Erst-/Zweitstimme)
+	-> Visualisierung tabellarisch (Wahlkreis, Siegerkandidat, Siegerpartei)
+Q5: Überhangsmandate
+	-> Überhangsmandate pro Partei und Bundesland
+	-> Visualisierung tabellarisch (Bundesland, Partei, Überhangsmandate)
+	-> Visualisierung Balkendiagramm pro Bundesland
+	-> Visualisierung Baklendiagramm pro Partei
+Q6: Knappste Sieger
+	-> Top 10 der knappsten Sieger für alle Parteien 
+	   (Erstkandidaten mit geringstem Vorsprung gewonnen,
+	   wenn eine Partei keinen Wahlkreis gewonnen hat, stattdessen knappsten Verlierer)
+	-> Visualisierung Liste
+	-> Visualisierung tabellarisch (Platzierung, Kandidat, Partei)
+Q7: Wahlkreisübersicht (Einzelstimmen)
+	-> gleiche Infos wie Q3, aber auf Einzelstimmen, 
+	   Auswahl des Wahlkreises kann auf 5 bayrische Wahlkreise beschränkt werden
+	-> Visualisierung siehe Q3
