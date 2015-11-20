@@ -3,31 +3,17 @@ DECLARE
     r integer;
 BEGIN
     alter table wahlkreisInElection add wahlbeteiligung decimal(5,4);
+	
+	update wahlkreisInElection wks
+	set wahlbeteiligung =  cast( wv.votes / cast(wks.residents as decimal(13,4)) as decimal(5,4))
+	from (
+		select w.wahlkreis, w.year, count(v.id) as votes
+		from vote v join wahlkreisinelection w on v.wahlkreis = w.wahlkreis and v.year = w.year
+		group by w.wahlkreis, w.year 
+		) wv
+	where wks.year = wv.year
+	and wks.wahlkreis = wv.wahlkreis;
 
-    FOR r IN SELECT DISTINCT wahlkreis FROM wahlkreisinelection
-    LOOP
-	update wahlkreisInElection set wahlbeteiligung =
-		(select cast(
-			(select count(*) from vote v 
-			join wahlkreis wks on v.wahlkreis = wks.id
-			where v.wahlkreis = w.wahlkreis and v.year = 2013)/
-			cast(w.residents as decimal(13,4)) 
-			as decimal(5,4)) 
-		from wahlkreisinelection w  
-		where w.year = 2013 and w.wahlkreis = r)
-	where year = 2013 and wahlkreis = r;
-
-	update wahlkreisInElection set wahlbeteiligung =
-		(select cast(
-			(select count(*) from vote v 
-			join wahlkreis wks on v.wahlkreis = wks.id
-			where v.wahlkreis = w.wahlkreis and v.year = 2009)/
-			cast(w.residents as decimal(13,4)) 
-			as decimal(5,4)) 
-		from wahlkreisinelection w  
-		where w.year = 2009 and w.wahlkreis = r)
-	where year = 2009 and wahlkreis = r;
-    END LOOP;
 END;
 $$ LANGUAGE plpgsql;
 

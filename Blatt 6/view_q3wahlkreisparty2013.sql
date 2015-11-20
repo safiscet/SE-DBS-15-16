@@ -1,6 +1,6 @@
 ﻿-- View: q3wahlkreisparty2013
 
-DROP VIEW q3wahlkreisparty2013;
+DROP VIEW IF EXISTS q3wahlkreisparty2013;
 
 CREATE VIEW q3wahlkreisparty2013 AS (
  SELECT wk.name AS wahlkreis, p.abkuerzung as party,

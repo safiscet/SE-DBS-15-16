@@ -1,6 +1,6 @@
 ﻿-- View: q4wahlkreissieger
 
-DROP VIEW q4wahlkreissieger;
+DROP VIEW IF EXISTS q4wahlkreissieger;
 
 CREATE VIEW q4wahlkreissieger AS (
  select wk.name as wahlkreis, p1.abkuerzung as winnerPartyErststimmen, 

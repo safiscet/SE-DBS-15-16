@@ -1,6 +1,6 @@
 ﻿-- View: q7wahlkreisparty2013
 
-DROP VIEW q7wahlkreisparty2013;
+DROP VIEW IF EXISTS q7wahlkreisparty2013;
 
 CREATE VIEW q7wahlkreisparty2013 AS (
 
