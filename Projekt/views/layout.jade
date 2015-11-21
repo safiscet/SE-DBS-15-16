@@ -1,0 +1,33 @@
+doctype
+html
+  head
+    title #{title} - Wahlinformationssystem
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    header
+      h1 
+        a(href='/') Wahlinformationssystem
+    .container
+      .main-content
+        block content
+      .sidebar
+        .navigation
+          h1 Navigation
+          p
+            a(href='/') Home
+          p 
+            a(href='/q1') Q1: Sitzverteilung
+          p 
+            a(href='/q2') Q2: Mitglieder des Bundestags
+          p 
+            a(href='/q3') Q3: Wahlkreisübersicht
+          p 
+            a(href='/q4') Q4: Wahlkreissieger
+          p 
+            a(href='/q5') Q5: Überhangmandate
+          p 
+            a(href='/q6') Q6: Knappste Sieger
+          p 
+            a(href='/q7') Q7: Wahlkreisübersicht (Einzelstimmen)
+    footer
+      p Running on node with Express, Jade and Stylus.
