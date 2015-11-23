@@ -30,3 +30,6 @@
   * auto-indent
   * source-preview
   * source-preview-jade
+
+  ## Miscellaneous
+  * [Jade-Tutorial](http://webapplog.com/jade/)
