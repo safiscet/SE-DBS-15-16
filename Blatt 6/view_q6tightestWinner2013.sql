@@ -1,6 +1,6 @@
 ﻿-- view: q6tightestWinner2013
 
-DROP VIEW q6tightestWinner2013;
+DROP VIEW IF EXISTS q6tightestWinner2013;
 
 CREATE OR REPLACE VIEW q6tightestWinner2013 AS
 -- differencePerWahlkreis shows the winner candidate for each wahlkreis
