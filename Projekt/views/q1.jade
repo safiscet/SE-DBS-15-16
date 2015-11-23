@@ -1,3 +1,17 @@
 extend layout
 block content
-  h1 Sitzverteilung des Bundestags
+    .page-header
+      h1 Sitzverteilung des Bundestags
+  
+    .main-results 
+      table.table.table-striped
+        thead
+          tr
+            th Partei
+            th Sitze
+        tbody
+            each value, index in resTable
+              tr
+                th= value.party
+                th= value.seats
+    //#{content}

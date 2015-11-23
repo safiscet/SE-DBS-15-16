@@ -6,6 +6,9 @@ stylus = require('stylus'),
 morgan = require('morgan'),
 nib = require('nib');
 
+var pg = require('pg');
+var connectionString = "postgres://postgres:admin@localhost:5432/bundestagswahlergebnisse";
+
 // local dependencies
 var q1 = require("./controllers/q1"),
 q2 = require("./controllers/q2"),
@@ -61,4 +64,4 @@ app.get('/q7', q7.loadQ7);
 
 // listen and start application
 app.listen(8080);
-console.log("Application started.");
+console.log("Application started. Listening on port 8080");
