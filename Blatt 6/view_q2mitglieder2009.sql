@@ -13,15 +13,16 @@ where w.year = 2009 and c.year = 2009
 noWinner as (
 select c.candidate, c.party, c.federalland, rank() over (partition by c.party, c.federalland order by c.rank )
 from candidateinelection c
-where c.year = 2009 
+where c.year = 2009
 and rank is not null
 and c.candidate not in (
 	select w.winnercandidate
 	from wahlkreisinelection w
 	where w.year = 2009
 	)
-)
+), 
 
+winners as (
 -- get all winners of a wahlkreis and the remaining number of candidates from landeslisten per party
 (select c.candidate, c.party, c.federalland
 from changeDivisorPartyFinal2009 ch, noWinner c
@@ -33,4 +34,12 @@ group by c.party, c.federalland, c.candidate
 union
 
 select * from kreisWinner) order by party, federalland, candidate
+)
+
+select c.name as candidate, p.abkuerzung as party, f.name as federalland
+from winners w, candidate c, party p, federalland f
+where w.candidate = c.id
+and w.party = p.id
+and w.federalland = f.id
+order by p.abkuerzung, f.name, c.name
 );

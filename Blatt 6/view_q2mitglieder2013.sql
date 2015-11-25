@@ -20,8 +20,9 @@ and c.candidate not in (
 	from wahlkreisinelection w
 	where w.year = 2013
 	)
-)
+), 
 
+winners as (
 -- get all winners of a wahlkreis and the remaining number of candidates from landeslisten per party
 (select c.candidate, c.party, c.federalland
 from changeDivisorPartyFinal2013 ch, noWinner c
@@ -33,4 +34,12 @@ group by c.party, c.federalland, c.candidate
 union
 
 select * from kreisWinner) order by party, federalland, candidate
+)
+
+select c.name as candidate, p.abkuerzung as party, f.name as federalland
+from winners w, candidate c, party p, federalland f
+where w.candidate = c.id
+and w.party = p.id
+and w.federalland = f.id
+order by p.abkuerzung, f.name, c.name
 );
