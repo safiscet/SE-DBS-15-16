@@ -1,3 +1,21 @@
 extend layout
 block content
-  h1 Überhangmandate
+  .page-header
+    h1 Überhangmandate
+    
+  .main-results 
+    table.table.table-striped
+      thead
+        tr
+          th Partei
+          th Bundesland
+          th Überhangmandate
+      tbody
+          each value, index in resTable
+            tr
+              th= value.party
+              th= value.federalland
+              th= value.ueberhangmandate
+    
+    .alert.alert-info  
+      | Info: Einträge mit Überhangmandaten von 0 werden ausgeblendet.

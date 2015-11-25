@@ -1,3 +1,20 @@
 extend layout
 block content
-  h1 Mitglieder des Bundestags
+  .page-header
+    h1 Mitglieder des Bundestags
+    
+  .main-results 
+    table.table.table-striped
+      thead
+        tr
+          th Nr.
+          th Kandidat
+          th Partei
+          th Bundesland
+      tbody
+          each value, index in resTable
+            tr
+              th= index+1
+              th= value.candidate
+              th= value.party
+              th= value.federalland
