@@ -12,7 +12,8 @@ exports.loadQ7 = function (req, res) {
     }
 
     // SQL Query > Select Data
-    var query = client.query("SELECT * FROM q7wahlkreisuebersicht2013 q1 JOIN q7wahlkreisparty2013 q2 ON q1.wahlkreis = q2.wahlkreis");
+    //var query = client.query("SELECT * FROM q7wahlkreisuebersicht2013 q1 JOIN q7wahlkreisparty2013 q2 ON q1.wahlkreis = q2.wahlkreis");
+    var query = client.query("SELECT * FROM q7wahlkreisuebersicht2013");
 
     // Stream results back one row at a time
     query.on('row', function(row) {

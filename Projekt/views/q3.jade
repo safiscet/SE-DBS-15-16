@@ -5,7 +5,8 @@ block content
 
     .main-results
       select(id="wahlkreise")
-        each value, index in resTable
+      //each value, index in resTable
+        each value, index in resTable1
           option(value= value.wahlkreis)= value.wahlkreis
 
 
@@ -16,17 +17,29 @@ block content
             th Wahlkreis
             th Wahlbeteiligung
             th Siegerkandidat
-            th Partei
-            th Anzahl der Zweitstimmen
-            th Prozent der Zweitstimmen
         tbody
+        //each value, index in resTable1
           each value, index in resTable
             tr
               th= value.nummer
               th= value.wahlkreis
               th= ((value.wahlbeteiligung)*100).toFixed(2) + "%"
               th= value.candidate
-              th= value.party
-              th= value.zweitstimmenabsolute
-              th= ((value.zweitstimmenpercent)*100).toFixed(2) + "%"
+
+           
+    //  table.table.table-striped
+    //    thead
+    //      tr
+    //        th Wahlkreis
+    //        th Partei
+    //        th Anzahl der Zweitstimmen
+    //        th Prozent der Zweitstimmen
+    //    tbody
+    //      each value, index in resTable2
+    //        tr
+    //          th= value.wahlkreis
+    //          th= value.party
+    //          th= value.zweitstimmenabsolute
+    //          th= ((value.zweitstimmenpercent)*100).toFixed(2) + "%"
+            
 //#{content}
