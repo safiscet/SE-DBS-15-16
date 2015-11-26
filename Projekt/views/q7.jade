@@ -1,3 +1,25 @@
 extend layout
 block content
-  h1 Wahlkreisübersicht (Berechnung aus Einzelstimmen)
+    .page-header
+      h1 Wahlkreisübersicht (Berechnung auf Einzelstimmen)
+
+    .main-results
+      table.table.table-striped
+        thead
+          tr
+            th Wahlkreis
+            th Wahlbeteiligung
+            th Siegerkandidat
+            th Partei
+            th Anzahl der Zweitstimmen
+            th Prozent der Zweitstimmen
+        tbody
+          each value, index in resTable
+            tr
+              th= value.wahlkreis
+              th= ((value.wahlbeteiligung)*100).toFixed(2) + "%"
+              th= value.candidate
+              th= value.party
+              //th= value.zweitstimmenabsolute
+              //th= ((value.zweitstimmenpercent)*100).toFixed(2) + "%"
+//#{content}

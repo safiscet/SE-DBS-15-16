@@ -5,9 +5,9 @@
   "dependencies": {
     "express": "*",
     "jade": "*",
-    "stylus": "*",
     "morgan": "*",
     "nib": "*",
-    "pg": "*"
+    "pg": "^4.4.3",
+    "stylus": "*"
   }
 }

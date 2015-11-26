@@ -1,3 +1,23 @@
 extend layout
 block content
-  h1 Knappste Sieger
+    .page-header
+      h1 Knappste Sieger
+  
+    .main-results 
+      table.table.table-striped
+        thead
+          tr
+            th Partei
+            th Rang
+            th Kandidat
+            th Differenz
+            th Sieger
+        tbody
+            each value, index in resTable
+              tr
+                th= value.candidateparty
+                th= value.rank
+                th= value.candidatename
+                th= value.difference
+                th= value.winner
+    //#{content}

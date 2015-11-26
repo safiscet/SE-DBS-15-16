@@ -1,3 +1,21 @@
 extend layout
 block content
-  h1 Wahlkreissieger
+    .page-header
+      h1 Wahlkreissieger
+
+    .main-results
+      table.table.table-striped
+        thead
+          tr
+            th Nr.
+            th Wahlkreis
+            th Siegerpartei Erststimmen
+            th Siegerpartei Zweitstimmen
+        tbody
+            each value, index in resTable
+              tr
+                th= value.nummer
+                th= value.wahlkreis
+                th= value.winnerpartyerststimmen
+                th= value.winnerpartyzweitstimmen
+    //#{content}

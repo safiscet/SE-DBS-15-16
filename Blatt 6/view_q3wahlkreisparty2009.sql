@@ -19,5 +19,5 @@ CREATE VIEW q3wahlkreisparty2009 AS (
     JOIN party p ON piw.party = p.id
     JOIN zweitstimmenGesamt zsg on zsg.wahlkreis = piw.wahlkreis
  WHERE piw.year = 2009
- ORDER BY wk.name, p.abkuerzung
+ ORDER BY wk.id, p.abkuerzung
 );
