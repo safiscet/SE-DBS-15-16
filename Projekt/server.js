@@ -4,7 +4,8 @@
 var express = require('express'),
 stylus = require('stylus'),
 morgan = require('morgan'),
-nib = require('nib');
+nib = require('nib'),
+timeout = require('connect-timeout');
 
 var pg = require('pg');
 var connectionString = "postgres://postgres:admin@localhost:5432/bundestagswahlergebnisse";
@@ -40,6 +41,19 @@ app.use(stylus.middleware(
 ))
 // configure path for static files
 app.use(express.static(__dirname + '/public'));
+
+app.use(function(req,res,next){
+  var _send = res.send;
+  var sent = false;
+  res.send = function(data){
+    if(sent) return;
+    _send.bind(res)(data);
+    sent = true;
+  };
+  next();
+});
+
+app.use(timeout(180000));
 // Routes
 // Home
 app.get('/', function (req, res) {
@@ -48,19 +62,19 @@ app.get('/', function (req, res) {
 )
 });
 // Q1 - Sitzverteilung
-app.get('/q1', q1.loadQ1);
+app.get('/q1/', q1.loadQ1);
 // Q2 - Mitglieder des Bundestags
-app.get('/q2', q2.loadQ2);
+app.get('/q2/', q2.loadQ2);
 // Q3 - Wahlkreisübersicht
-app.get('/q3', q3.loadQ3);
+app.get('/q3/(:wahlkreisId)?', q3.loadQ3);
 // Q4 - Wahlkreissieger
-app.get('/q4', q4.loadQ4);
+app.get('/q4/', q4.loadQ4);
 // Q5 - Überhangmandate
-app.get('/q5', q5.loadQ5);
+app.get('/q5/', q5.loadQ5);
 // Q6 - Knappste Sieger
-app.get('/q6', q6.loadQ6);
+app.get('/q6/(:party)?', q6.loadQ6);
 // Q7 - Einzelstimmen (Wahlkreisübersicht)
-app.get('/q7', q7.loadQ7);
+app.get('/q7/', q7.loadQ7);
 
 // listen and start application
 app.listen(8080);

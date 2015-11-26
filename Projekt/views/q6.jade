@@ -4,6 +4,11 @@ block content
       h1 Knappste Sieger
   
     .main-results 
+      select.form-control(id="parteien", onChange="window.location=this.value")
+        option(value= "")= "- Bitte Partei auswählen -"
+        each value, index in parties
+          option(value= value.id)= value.party
+          
       table.table.table-striped
         thead
           tr
@@ -20,4 +25,3 @@ block content
                 th= value.candidatename
                 th= value.difference
                 th= value.winner
-    //#{content}

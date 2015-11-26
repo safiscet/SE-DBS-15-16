@@ -12,10 +12,9 @@ block content
             th Siegerpartei Erststimmen
             th Siegerpartei Zweitstimmen
         tbody
-            each value, index in resTable
-              tr
-                th= value.nummer
-                th= value.wahlkreis
-                th= value.winnerpartyerststimmen
-                th= value.winnerpartyzweitstimmen
-    //#{content}
+          each value, index in resTable
+            tr
+              th= value.nummer
+              th= value.wahlkreis
+              th= value.winnerpartyerststimmen
+              th= value.winnerpartyzweitstimmen

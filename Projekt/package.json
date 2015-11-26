@@ -8,6 +8,7 @@
     "morgan": "*",
     "nib": "*",
     "pg": "*",
-    "stylus": "*"
+    "stylus": "*",
+    "connect-timeout"
   }
 }
