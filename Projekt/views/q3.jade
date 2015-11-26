@@ -4,10 +4,10 @@ block content
       h1 Wahlkreisübersicht
 
     .main-results
-      select(id="wahlkreise")
-      //each value, index in resTable
-        each value, index in resTable1
-          option(value= value.wahlkreis)= value.wahlkreis
+      select(id="wahlkreise", onchange= "window.location=this.value")
+        option(value= "")= "- Bitte Wahlkreis auswählen -"
+        each value, index in optionTable
+          option(value= value.nummer)= value.nummer + " - " + value.wahlkreis
 
 
       table.table.table-striped
@@ -18,7 +18,6 @@ block content
             th Wahlbeteiligung
             th Siegerkandidat
         tbody
-        //each value, index in resTable1
           each value, index in resTable
             tr
               th= value.nummer
@@ -27,19 +26,19 @@ block content
               th= value.candidate
 
            
-    //  table.table.table-striped
-    //    thead
-    //      tr
-    //        th Wahlkreis
-    //        th Partei
-    //        th Anzahl der Zweitstimmen
-    //        th Prozent der Zweitstimmen
-    //    tbody
-    //      each value, index in resTable2
-    //        tr
-    //          th= value.wahlkreis
-    //          th= value.party
-    //          th= value.zweitstimmenabsolute
-    //          th= ((value.zweitstimmenpercent)*100).toFixed(2) + "%"
+      table.table.table-striped
+        thead
+          tr
+            //th Wahlkreis
+            th Partei
+            th Anzahl der Zweitstimmen
+            th Prozent der Zweitstimmen
+        tbody
+          each value, index in ergTable 
+            tr
+              //th= value.wahlkreis
+              th= value.party
+              th= value.zweitstimmenabsolute
+              th= ((value.zweitstimmenpercent)*100).toFixed(2) + "%"
             
 //#{content}
