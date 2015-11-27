@@ -9,6 +9,6 @@
     "nib": "*",
     "pg": "*",
     "stylus": "*",
-    "connect-timeout"
+    "connect-timeout": "*"
   }
 }
