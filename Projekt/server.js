@@ -74,7 +74,7 @@ app.get('/q5/', q5.loadQ5);
 // Q6 - Knappste Sieger
 app.get('/q6/(:party)?', q6.loadQ6);
 // Q7 - Einzelstimmen (Wahlkreisübersicht)
-app.get('/q7/', q7.loadQ7);
+app.get('/q7/(:wahlkreisId)?', q7.loadQ7);
 
 // listen and start application
 app.listen(8080);
