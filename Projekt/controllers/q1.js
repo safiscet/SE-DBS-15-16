@@ -24,7 +24,9 @@ exports.loadQ1 = function (req, res) {
       done();
       res.render('q1',
       { title : 'Sitzverteilung',
-        resTable : results});
+        resTable : results,
+        partyData : results
+      });
     });
 
   });
