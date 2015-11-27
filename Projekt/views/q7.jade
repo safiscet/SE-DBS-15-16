@@ -27,18 +27,22 @@ block content
 
            
       table.table.table-striped
-        thead
+      thead
+        tr
+          //th Wahlkreis
+          th Partei
+          th Anzahl der Zweitstimmen 2013
+          th Anzahl der Zweitstimmen 2009
+          th Prozent der Zweitstimmen 2013
+          th Prozent der Zweitstimmen 2009
+      tbody
+        each value, index in ergTable 
           tr
-            //th Wahlkreis
-            th Partei
-            th Anzahl der Zweitstimmen
-            th Prozent der Zweitstimmen
-        tbody
-          each value, index in ergTable 
-            tr
-              //th= value.wahlkreis
-              th= value.party
-              th= value.zweitstimmenabsolute
-              th= ((value.zweitstimmenpercent)*100).toFixed(2) + "%"
+            //th= value.wahlkreis
+            th= value.party
+            th= value.zweitstimmenabsolute
+            th= value.zweitstimmenabsolute2009
+            th= ((value.zweitstimmenpercent)*100).toFixed(2) + "%"
+            th= ((value.zweitstimmenpercent2009)*100).toFixed(2) + "%"
             
 //#{content}

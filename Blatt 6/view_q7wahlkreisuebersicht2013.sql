@@ -1,6 +1,6 @@
 ﻿-- View: Q7wahlkreisuebersicht2013
 
---DROP VIEW IF EXISTS Q7wahlkreisuebersicht2013 CASCADE;
+DROP VIEW IF EXISTS Q7wahlkreisuebersicht2013 CASCADE;
 
 CREATE OR REPLACE VIEW Q7wahlkreisuebersicht2013 AS (
 
@@ -15,7 +15,8 @@ CREATE OR REPLACE VIEW Q7wahlkreisuebersicht2013 AS (
 		group by wahlkreis
 	)
 		
-	select wk.name as wahlkreis, 
+	select wk.id as nummer,
+		wk.name as wahlkreis, 
 		cast(wb.all / cast(w.residents as decimal(13,4)) 
 		as decimal(5,4)) as wahlbeteiligung,
 		c.name as candidate

@@ -16,14 +16,14 @@ CREATE VIEW Q7wahlkreisparty2009 AS (
  SELECT wk.name AS wahlkreis, p.abkuerzung as party,
     COALESCE((select absolute from zweitstimmenAbsolute za
     where za.wahlkreis = piw.wahlkreis
-    and za.zweitstimme = piw.party), 0) as zweitstimmenAbsolute,
+    and za.zweitstimme = piw.party), 0) as zweitstimmenAbsolute2009,
     COALESCE(cast(cast((select absolute from zweitstimmenAbsolute za
     where za.wahlkreis = piw.wahlkreis
     and za.zweitstimme = piw.party)
     as decimal (14, 4))/(select sum(absolute) 
     from zweitstimmenAbsolute za2 
     where za2.wahlkreis = wk.id 
-    and zweitstimme > 0) as decimal (14, 4)), 0) as zweitstimmenPercent
+    and zweitstimme > 0) as decimal (14, 4)), 0) as zweitstimmenPercent2009
  FROM partyInWahlkreis piw
      JOIN wahlkreis wk ON piw.wahlkreis = wk.id
      JOIN party p ON piw.party = p.id

@@ -21,10 +21,10 @@ exports.loadQ3 = function (req, res) {
 
     if(wahlkreisId == undefined){
       var query = client.query("SELECT * FROM q3wahlkreisuebersicht2013");
-      var query2 = client.query("SELECT * FROM q3wahlkreisparty2013");
+      var query2 = client.query("SELECT q13.wahlkreis, q13.party, q13.zweitstimmenabsolute, q13.zweitstimmenpercent, q9.zweitstimmenabsolute2009, q9.zweitstimmenpercent2009 FROM q3wahlkreisparty2013 q13 JOIN q3wahlkreisparty2009 q9 ON q13.wahlkreis = q9.wahlkreis WHERE q13.party = q9.party");
     } else {
       var query = client.query("SELECT * FROM q3wahlkreisuebersicht2013 WHERE nummer = "+wahlkreisId);
-      var query2 = client.query("SELECT * FROM q3wahlkreisparty2013 wkp JOIN wahlkreis w ON w.name = wkp.wahlkreis where w.id ="+wahlkreisId);
+      var query2 = client.query("SELECT q13.wahlkreis, q13.party, q13.zweitstimmenabsolute, q13.zweitstimmenpercent, q9.zweitstimmenabsolute2009, q9.zweitstimmenpercent2009 FROM q3wahlkreisparty2013 q13 JOIN q3wahlkreisparty2009 q9 ON q13.wahlkreis = q9.wahlkreis JOIN wahlkreis w ON w.name = q13.wahlkreis WHERE q13.party = q9.party AND w.id ="+wahlkreisId);
     }
 
     // Stream results back one row at a time
@@ -41,6 +41,7 @@ exports.loadQ3 = function (req, res) {
     query3.on('row', function(row) {
       wahlkreisForOption.push(row);
     });
+
 
     client.on('drain', function() {
       done();

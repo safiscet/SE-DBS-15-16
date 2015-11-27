@@ -11,9 +11,9 @@ CREATE VIEW q3wahlkreisparty2009 AS (
       
  SELECT wk.name AS wahlkreis, 
     p.abkuerzung as party,
-    piw.zweitstimmen as zweitstimmenAbsolute,
+    piw.zweitstimmen as zweitstimmenAbsolute2009,
     cast(cast(piw.zweitstimmen as decimal (14, 4))/
-    zsg.sum as decimal (14, 4)) as zweitstimmenPercent
+    zsg.sum as decimal (14, 4)) as zweitstimmenPercent2009
  FROM partyInWahlkreis piw
     JOIN wahlkreis wk ON piw.wahlkreis = wk.id
     JOIN party p ON piw.party = p.id
