@@ -1,0 +1,43 @@
+extend layout
+block content
+  .page-header
+    h1 Stimme abgeben für die Bundestagswahl 2013
+
+  .main-results 
+    p Um an der Bundestagswahl teilnehmen zu können, müssen Sie sich vorher anmelden:
+    
+    label Kennung:
+    textarea(maxlength= 7)
+    label Geburtsdatum: 
+    textarea(maxlength= 8)
+    button(type= submit, id= loginButton) Login
+    
+    p(id= logInOrOut) Sie sind momentan nicht eingeloggt.
+    //Should change to "Sie sind nun eingeloggt und können Ihre Stimme abgeben." when logged in
+    
+    table.table.table-striped
+      thead
+        tr
+          th 
+          th Erststimme
+          th
+          th Zweitstimme
+      //should show the candidates and parties of the electors wahlkreis 
+      tbody
+        tr
+          th 
+            input(type= "Radio")
+          th Kandidat A
+          th
+            input(type= "Radio")
+          th Partei A
+        tr
+          th 
+            input(type= "Radio")
+          th ungültige Stimme
+          th
+            input(type= "Radio")
+          th ungültige Stimme
+    
+    button(type= button, onclick="window.location='/'") Zurück
+    button(type= submit, onclick="window.location='/'") Stimme abgeben

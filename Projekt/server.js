@@ -61,6 +61,11 @@ app.get('/', function (req, res) {
   { title : 'Home' }
 )
 });
+//Stimme abgeben
+app.get('/login', function (req, res) {
+  res.render('login',
+  { title : 'Stimme abgeben'})
+});
 // Q1 - Sitzverteilung
 app.get('/q1/', q1.loadQ1);
 // Q2 - Mitglieder des Bundestags
