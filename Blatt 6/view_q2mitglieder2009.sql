@@ -25,7 +25,7 @@ and c.candidate not in (
 winners as (
 -- get all winners of a wahlkreis and the remaining number of candidates from landeslisten per party
 (select c.candidate, c.party, c.federalland
-from changeDivisorPartyFinal2009 ch, noWinner c
+from calculateResult(2009) ch, noWinner c
 where ch.party = c.party
 and ch.federalland = c.federalland
 and c.rank <= (ch.seats - ch.kreisseats)

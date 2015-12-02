@@ -2,10 +2,10 @@
 DECLARE
     r integer;
 BEGIN
-    FOR r IN SELECT id FROM changeDivisorFederalLand2013
+    FOR r IN SELECT id FROM changeDivisorFederalLand
     LOOP
-	update changeDivisorFederalLand2013 set
-	seats = (select residents2013/resultingdivisor from changedivisorfederalland2013 where id = r)
+	update changeDivisorFederalLand set
+	seats = (select residents/resultingdivisor from changedivisorfederalland where id = r)
 	where id = r;
     END LOOP;
 END;

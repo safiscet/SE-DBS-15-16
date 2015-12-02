@@ -2,9 +2,9 @@
 DECLARE
     r integer;
 BEGIN
-    FOR r IN SELECT id FROM changeDivisorFederalLand2013
+    FOR r IN SELECT id FROM changeDivisorFederalLand
     LOOP
-	update changeDivisorFederalLand2013 set
+	update changeDivisorFederalLand set
         changebyhalfseat = (select f.seats +0.5 from firstSeatsFederalLand f where f.id = r),
 	changebyoneandhalfseat = (select f.seats +1.5 from firstSeatsFederalLand f where f.id = r)
 	where id = r;

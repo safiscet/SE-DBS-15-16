@@ -7,45 +7,45 @@ DECLARE
     u integer;
 BEGIN
     -- update minSeats column
-    UPDATE changeDivisorRaiseParty2013 ch
+    UPDATE changeDivisorRaiseParty ch
     set minSeats = old.minSeats
     FROM (
 	select mind.party, COALESCE(SUM(mind.maxfromseatsandwahlkreis),0) AS minSeats
-	from changedivisorParty2013 mind
+	from changedivisorParty mind
 	group by mind.party
     ) old
     WHERE ch.party = old.party;
 
     -- compute the first divisor for every party
-       update changeDivisorRaiseParty2013 ch
+       update changeDivisorRaiseParty ch
        set changeByHalfSeat = minSeats - 0.5;
 
-       update changeDivisorRaiseParty2013 ch
+       update changeDivisorRaiseParty ch
        set divisorCandidate1 = cast(zweitstimmen
 		/(changeByHalfSeat) as decimal(20, 6));
    
 
     -- compute the second divisor for every party
-	update changeDivisorRaiseParty2013 ch
+	update changeDivisorRaiseParty ch
 	set changeResultingByHalfSeat = (round(cast((ch.zweitstimmen / t.minDiv) as decimal(20, 6)))) + 0.5
 	FROM (
 	   select min(ch1.divisorCandidate1) AS minDiv
-	   from changeDivisorRaiseParty2013 ch1
+	   from changeDivisorRaiseParty ch1
 	) t;
 
-	update changeDivisorRaiseParty2013 ch
+	update changeDivisorRaiseParty ch
 	set divisorCandidate2 = cast(zweitstimmen
 		/(changeResultingByHalfSeat) as decimal(20, 6));
 
     -- compute the resulting divisor: max(divisorCandidate2) < resulting divisor <= min(divisorCandidate)
-    perform getFinalDivisorRaiseParty((select max(divisorCandidate2) from changeDivisorRaiseParty2013), (select min(divisorCandidate1) from changeDivisorRaiseParty2013));
+    perform getFinalDivisorRaiseParty((select max(divisorCandidate2) from changeDivisorRaiseParty), (select min(divisorCandidate1) from changeDivisorRaiseParty));
 
     -- update the raised number of seats with the final divisor
-	update changeDivisorRaiseParty2013
+	update changeDivisorRaiseParty
 	set seats = round(zweitstimmen / resultingdivisor);
 
     -- compute the ausgleichsmandate
-	update changeDivisorRaiseParty2013
+	update changeDivisorRaiseParty
 	set ausgleichsmandate = seats - minSeats;
     
 END;

@@ -2,9 +2,8 @@
 
 CREATE VIEW q5ueberhangmandate2013 AS (
 	with mandate as (
-	select p.abkuerzung as party, f.name as federalland, 
-		(CASE WHEN ch.maxfromseatsandwahlkreis <> ch.seats THEN ch.maxfromseatsandwahlkreis - ch.seats ELSE null END) as ueberhangmandate
-	from changedivisorparty2013 ch, party p, federalland f
+	select p.abkuerzung as party, f.name as federalland, ch.ueberhangmandate
+	from calculateResult(2013) ch, party p, federalland f
 	where p.id = ch.party 
 	and f.id = ch.federalland
 	)

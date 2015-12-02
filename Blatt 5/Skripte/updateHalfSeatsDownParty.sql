@@ -2,22 +2,22 @@
 DECLARE
     s integer;
 BEGIN
-	FOR s IN SELECT DISTINCT party FROM changeDivisorParty2013
+	FOR s IN SELECT DISTINCT party FROM changeDivisorParty
 	LOOP
-		IF (select f.seats -0.5 from firstSeatsParty2013 f
+		IF (select f.seats -0.5 from firstSeatsParty f
 			where f.federalland = federallandID and f.party = s) >= 0 THEN
-		update changeDivisorParty2013 set
+		update changeDivisorParty set
 			changebyhalfseat = (select f.seats -0.5 
-			from firstSeatsParty2013 f
+			from firstSeatsParty f
 			where f.federalland = federallandID and f.party = s)
 		where federalland = federallandID and party = s;
 		END IF;
 
-		IF (select f.seats -1.5 from firstSeatsParty2013 f
+		IF (select f.seats -1.5 from firstSeatsParty f
 			where f.federalland = federallandID and f.party = s) >= 0 THEN
-		update changeDivisorParty2013 set
+		update changeDivisorParty set
 			changebyoneandhalfseat = (select f.seats -1.5 
-			from firstSeatsParty2013 f
+			from firstSeatsParty f
 			where f.federalland = federallandID and f.party = s)
 		where federalland = federallandID and party = s;
 		END IF;

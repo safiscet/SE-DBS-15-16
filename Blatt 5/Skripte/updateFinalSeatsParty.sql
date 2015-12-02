@@ -2,14 +2,14 @@
 DECLARE
     s integer;
 BEGIN
-	FOR s IN SELECT DISTINCT party FROM changeDivisorParty2013
+	FOR s IN SELECT DISTINCT party FROM changeDivisorParty
 	LOOP
-		update changeDivisorParty2013 set
+		update changeDivisorParty set
 			seats = ((select zweitstimmen 
-			from changeDivisorParty2013 
+			from changeDivisorParty 
 			where federalland = federallandID and party = s)/
 			(select resultingdivisor 
-			from changedivisorParty2013 
+			from changedivisorParty 
 			where federalland = federallandID and party = s))
 		where federalland = federallandID and party = s;
 	END LOOP;
