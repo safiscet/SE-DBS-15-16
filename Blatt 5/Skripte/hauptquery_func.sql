@@ -3,26 +3,26 @@
 	AS $$
 DECLARE
 BEGIN
--- create tables
-create table if not exists firstSeatsFederalLand (id int primary key, residents int, seats int);
-create table if not exists changeDivisorFederalLand (id int primary key, residents int, 
+-- create temp tables
+create temp table if not exists firstSeatsFederalLand (id int primary key, residents int, seats int);
+create temp table if not exists changeDivisorFederalLand (id int primary key, residents int, 
 changeByHalfSeat decimal(5,1), divisorCandidate1 decimal(12, 6), 
 changeByOneAndHalfSeat decimal(5,1), divisorCandidate2 decimal(12, 6), 
 resultingDivisor decimal(12, 6), seats int);
-create table if not exists firstSeatsParty (federalland int, party int, beginDivisor decimal(12,6), seats int, 
+create temp table if not exists firstSeatsParty (federalland int, party int, beginDivisor decimal(12,6), seats int, 
 primary key(federalland, party));
-create table if not exists changeDivisorParty (federalland int, party int, zweitstimmen int, 
+create temp table if not exists changeDivisorParty (federalland int, party int, zweitstimmen int, 
 changeByHalfSeat decimal(5,1), divisorCandidate1 decimal(20, 6), 
 changeByOneAndHalfSeat decimal(5,1), divisorCandidate2 decimal(20, 6), 
 resultingDivisor decimal(20, 6), seats int, maxFromSeatsAndWahlkreis int, primary key(federalland, party));
-create table if not exists changeDivisorRaiseParty (party int primary key, zweitstimmen int, 
+create temp table if not exists changeDivisorRaiseParty (party int primary key, zweitstimmen int, 
 minSeats int,
 changeByHalfSeat decimal(5,1), divisorCandidate1 decimal(20, 6), 
 changeResultingByHalfSeat decimal(5,1), divisorCandidate2 decimal(20, 6), 
 resultingDivisor decimal(20, 6), seats int, ausgleichsmandate int);
-create table if not exists firstSeatsPartyFinal (federalland smallint references federalland(id),party smallint references party(id),
+create temp table if not exists firstSeatsPartyFinal (federalland smallint,party smallint,
 	zweitstimmen int, begindivisor decimal(20, 6), ratioSeats int, kreisSeats int, seats int, primary key (federalland, party));
-create table if not exists changeDivisorPartyFinal (party int, federalland int, zweitstimmen int, minSeats int, maxFromSeatsAndWahlkreis int, kreisseats int,prevseats int,
+create temp table if not exists changeDivisorPartyFinal (party int, federalland int, zweitstimmen int, minSeats int, maxFromSeatsAndWahlkreis int, kreisseats int,prevseats int,
 	changeByHalfSeat decimal(5,1), divisorCandidate1 decimal(20, 6), changeByOneAndHalfSeat decimal(5,1), divisorCandidate2 decimal(20, 6), 
 	resultingDivisor decimal(20, 6), ratioseats int, seats int, primary key(federalland, party));
 
