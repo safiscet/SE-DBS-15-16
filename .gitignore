@@ -46,3 +46,6 @@ node_modules
 
 # Optional npm cache directory
 .npm
+
+# temp word files
+~$*.docx
