@@ -15,29 +15,4 @@ block content
     p(id= logInOrOut) Sie sind momentan nicht eingeloggt.
     //Should change to "Sie sind nun eingeloggt und können Ihre Stimme abgeben." when logged in
     
-    table.table.table-striped
-      thead
-        tr
-          th 
-          th Erststimme
-          th
-          th Zweitstimme
-      //should show the candidates and parties of the electors wahlkreis 
-      tbody
-        tr
-          th 
-            input(type= "Radio")
-          th Kandidat A
-          th
-            input(type= "Radio")
-          th Partei A
-        tr
-          th 
-            input(type= "Radio")
-          th ungültige Stimme
-          th
-            input(type= "Radio")
-          th ungültige Stimme
     
-    button(type= button, onclick="window.location='/'") Zurück
-    button(type= submit, onclick="window.location='/'") Stimme abgeben

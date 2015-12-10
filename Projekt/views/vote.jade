@@ -1,0 +1,32 @@
+extend layout
+block content
+  .page-header
+    h1 Stimme abgeben für die Bundestagswahl 2013
+
+  .main-results 
+    table.table.table-striped
+      thead
+        tr
+          th 
+          th Erststimme
+          th
+          th Zweitstimme
+    //should show the candidates and parties of the electors wahlkreis 
+      tbody
+        tr
+          th 
+            input(type= "Radio")
+          th Kandidat A
+          th
+            input(type= "Radio")
+          th Partei A
+        tr
+          th 
+            input(type= "Radio")
+          th ungültige Stimme
+          th
+            input(type= "Radio")
+          th ungültige Stimme
+
+button(type= button, onclick="window.location='/'") Zurück
+button(type= submit, onclick="window.location='/'") Stimme abgeben
