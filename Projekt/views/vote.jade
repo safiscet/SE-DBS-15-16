@@ -4,29 +4,38 @@ block content
     h1 Stimme abgeben für die Bundestagswahl 2013
 
   .main-results 
-    table.table.table-striped
-      thead
-        tr
-          th 
-          th Erststimme
-          th
-          th Zweitstimme
-    //should show the candidates and parties of the electors wahlkreis 
-      tbody
-        tr
-          th 
-            input(type= "Radio")
-          th Kandidat A
-          th
-            input(type= "Radio")
-          th Partei A
-        tr
-          th 
-            input(type= "Radio")
-          th ungültige Stimme
-          th
-            input(type= "Radio")
-          th ungültige Stimme
+    form(id= "submitForm" method= "get" action= "../submit/3/1/1/1") 
+      //+document.getElementsByName("Zweitstimme")[0].getAttribute("id")
+      table.table.table-striped
+        thead
+          tr
+            th 
+            th Erststimme
+            th
+            th
+            th Zweitstimme 
+            th
+        tbody
+          each value, index in resTable
+            tr
+              th
+                input(type= "Radio" name= "Erststimme" id= value.candidateID)
+              th= value.candidate 
+              th= value.candidateparty
+              th
+                input(type= "Radio" name= "Zweitstimme" id= value.partyID)
+              th= value.abkuerzung 
+              th= value.party 
+          tr
+            th 
+              input(type= "Radio" name= "Erststimme" id= "noErststimme")
+            th ungültige Stimme
+            th
+            th
+              input(type= "Radio" name= "Zweitstimme" id= "noZweitstimme")
+            th ungültige Stimme
+            th
 
-button(type= button, onclick="window.location='/'") Zurück
-button(type= submit, onclick="window.location='/'") Stimme abgeben
+      button(name= "submit" type= submit) Stimme abgeben
+      
+    button(type= button, onclick="window.location='/'") Zurück
