@@ -4,7 +4,7 @@ block content
       h1 Wahlkreisübersicht
 
     .main-results
-      select(id="wahlkreise", onchange= "window.location=this.value")
+      select.form-control(id="wahlkreise", onchange= "window.location=this.value")
         option(value= "")= "- Bitte Wahlkreis auswählen -"
         each value, index in optionTable
           option(value= value.nummer)= value.nummer + " - " + value.wahlkreis
