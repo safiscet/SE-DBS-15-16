@@ -21,8 +21,13 @@ q3 = require("./controllers/q3"),
 q4 = require("./controllers/q4"),
 q5 = require("./controllers/q5"),
 q6 = require("./controllers/q6"),
+<<<<<<< Updated upstream
 q7 = require("./controllers/q7");
 auth = require("./controllers/auth")
+=======
+vote = require("./controllers/vote"),
+submit = require("./controllers/submit");
+>>>>>>> Stashed changes
 
 // set app and exports for routing
 var app = express();
@@ -78,6 +83,7 @@ app.get('/auth', auth.loadAuth);
 app.post('/auth', auth.loadAuth);
 
 //Stimme abgeben
+<<<<<<< Updated upstream
 app.get('/vote/(:wahlkreis)?', function (req, res) {
   // TODO zum Einfügen dann:
   console.log(req.flash('kennung')[0]);
@@ -85,6 +91,9 @@ app.get('/vote/(:wahlkreis)?', function (req, res) {
   res.render('vote',
   { title : 'Wählen'})
 });
+=======
+app.get('/submit/:wahlkreisID/:electorID/:erststimme/:zweitstimme', submit.loadSubmit);
+>>>>>>> Stashed changes
 
 // Q1 - Sitzverteilung
 app.get('/q1/', q1.loadQ1);
