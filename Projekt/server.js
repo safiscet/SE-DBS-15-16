@@ -6,6 +6,10 @@ stylus = require('stylus'),
 morgan = require('morgan'),
 nib = require('nib'),
 timeout = require('connect-timeout');
+bodyParser = require('body-parser');
+flash = require('connect-flash');
+cookieParser = require('cookie-parser');
+session = require('express-session');
 
 var pg = require('pg');
 var connectionString = "postgres://postgres:admin@localhost:5432/bundestagswahlergebnisse";
@@ -18,6 +22,7 @@ q4 = require("./controllers/q4"),
 q5 = require("./controllers/q5"),
 q6 = require("./controllers/q6"),
 q7 = require("./controllers/q7");
+auth = require("./controllers/auth")
 
 // set app and exports for routing
 var app = express();
@@ -41,6 +46,13 @@ app.use(stylus.middleware(
 ))
 // configure path for static files
 app.use(express.static(__dirname + '/public'));
+// configure body-parser
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+//configure flash
+app.use(cookieParser('keyboard cat'));
+app.use(session({ cookie: {maxAge: 60000}, resave: false, saveUninitialized: false, secret: 'secret'}));
+app.use(flash());
 
 app.use(function(req,res,next){
   var _send = res.send;
@@ -62,13 +74,14 @@ app.get('/', function (req, res) {
 )
 });
 //Login
-app.get('/auth', function (req, res) {
-  res.render('auth',
-  { title : 'Stimme abgeben'})
-});
+app.get('/auth', auth.loadAuth);
+app.post('/auth', auth.loadAuth);
 
 //Stimme abgeben
-app.get('/vote', function (req, res) {
+app.get('/vote/(:wahlkreis)?', function (req, res) {
+  // TODO zum Einfügen dann:
+  console.log(req.flash('kennung')[0]);
+  console.log(req.flash('geburtsdatum')[0]);
   res.render('vote',
   { title : 'Wählen'})
 });

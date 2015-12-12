@@ -4,15 +4,29 @@ block content
     h1 Stimme abgeben für die Bundestagswahl 2013
 
   .main-results 
-    p Um an der Bundestagswahl teilnehmen zu können, müssen Sie sich vorher anmelden:
+    .alert.alert-info
+      | Um an der Bundestagswahl teilnehmen zu können, müssen Sie sich vorher anmelden.
+      
+    each value in errorTable
+      .alert.alert-danger= value
     
-    label Kennung:
-    textarea(maxlength= 7)
-    label Geburtsdatum: 
-    textarea(maxlength= 8)
-    button(type= submit, id= loginButton) Login
+    //- label Kennung:
+    //- textarea(maxlength= 7)
+    //- label Geburtsdatum: 
+    //- textarea(maxlength= 8)
+    //- button(type= submit, id= loginButton) Login
     
-    p(id= logInOrOut) Sie sind momentan nicht eingeloggt.
-    //Should change to "Sie sind nun eingeloggt und können Ihre Stimme abgeben." when logged in
+    form.form-horizontal(role="form", action="/auth", method="post")
+      .form-group
+        label.control-label.col-md-2(for="kennung") Kennung:
+        .col-md-10
+          input.form-control#kennung(type="text", name="kennung", placeholder="Bitte die Kennung eingeben", value= kenVal)
+      .form-group
+        label.control-label.col-md-2(for="geburtsdatum") Geburtsdatum:
+        .col-md-10
+          input.form-control#geburtsdatum(type="text", name="geburtsdatum", placeholder="Bitte das Geburtsdatum eingeben der Form TTMMJJJJ", value= gebVal)
+      .form-group
+        .col-md-offset-2.col-md-10
+          input.btn.btn-default(type="submit", value="Absenden")
     
     

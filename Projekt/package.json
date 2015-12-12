@@ -9,6 +9,10 @@
     "nib": "*",
     "pg": "*",
     "stylus": "*",
-    "connect-timeout": "*"
+    "connect-timeout": "*",
+    "body-parser": "*",
+    "connect-flash" : "*",
+    "cookie-parser" : "*",
+    "express-session" : "*"
   }
 }
