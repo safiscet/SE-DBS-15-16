@@ -1,11 +1,42 @@
 extend layout
 block content
   .page-header
-    h1 Stimme abgeben für die Bundestagswahl 2013
+    h1 Stimme abgeben für die Bundestagswahl 2013 
+    
 
   .main-results 
-    form(id= "submitForm" method= "get" action= "../submit/3/1/1/1") 
-      //+document.getElementsByName("Zweitstimme")[0].getAttribute("id")
+    .alert.alert-info
+      | Sie haben 2 Stimmen. 
+    .alert.alert-info
+      | Mit der Erststimme können Sie einen Wahlkreisabgeordneten wählen.
+    .alert.alert-info
+      | Mit der Zweitstimme können Sie eine Landesliste (Partei) wählen.
+    
+    each value in errorTable
+      .alert.alert-danger= value
+      
+    script.
+      function submit(){
+        
+        var wahlkreisId = req.flash('wahlkreis')[0];
+        console.log(wahlkreisId);
+        alert(wahlkreisId);
+        var elector = req.flash('kennung')[0];
+        var erststimme = req.body.Erststimme;
+        var zweitstimme = req.body.Zweitstimme;
+          
+        req.flash('wahlkreisID', wahlkreisId);
+        req.flash('elector', elector);
+        req.flash('erststimme', erststimme);
+        req.flash('zweitstimme', zweitstimme);
+          
+        res.redirect("/submit/");
+      }
+    
+    label(name= "elector" hidden)= ergTable[1]
+    label(name= "wahlkreisId" hidden)= ergTable[0]
+    
+    form(id= "submitForm" method= "post" action= "/submit/") 
       table.table.table-striped
         thead
           tr
@@ -19,23 +50,32 @@ block content
           each value, index in resTable
             tr
               th
-                input(type= "Radio" name= "Erststimme" id= value.candidateID)
+                input(type= "Radio" name= "Erststimme" value= value.candidateID)
               th= value.candidate 
               th= value.candidateparty
               th
-                input(type= "Radio" name= "Zweitstimme" id= value.partyID)
+                input(type= "Radio" name= "Zweitstimme" value= value.partyID)
               th= value.abkuerzung 
               th= value.party 
           tr
             th 
-              input(type= "Radio" name= "Erststimme" id= "noErststimme")
+              input(type= "Radio" name= "Erststimme" value= "noErststimme")
             th ungültige Stimme
             th
             th
-              input(type= "Radio" name= "Zweitstimme" id= "noZweitstimme")
+              input(type= "Radio" name= "Zweitstimme" value= "noZweitstimme")
             th ungültige Stimme
             th
 
-      button(name= "submit" type= submit) Stimme abgeben
+      button(name= "submitButton" type= submit onclick= "submit()") Stimme abgeben
       
     button(type= button, onclick="window.location='/'") Zurück
+  
+    script.
+      $(document).ready(function(){
+        var wahlkreisId = req.flash('wahlkreis')[0];
+        console.log(wahlkreisId);
+        alert(wahlkreisId);
+        var elector = req.flash('kennung')[0];   
+      });
+  
