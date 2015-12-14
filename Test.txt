@@ -1,0 +1,8 @@
+- Diagramme: Farben anpassen an Partei
+- Aktive Navigation
+- Stimmabgabe fertig machen
+- Stimmabgabe verschönern
+- Koalitionsdiagramm und so
+- Wahlkreissieger: Farben der Partei
+- Selektionen für Bundesländer/Wahlkreise einfügen
+- alte Dokumente anpassen (Objektmodell, Lastenheft (evtl), Pflichtenheft (evtl))
