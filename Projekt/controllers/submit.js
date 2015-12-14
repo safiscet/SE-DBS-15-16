@@ -5,13 +5,9 @@ exports.loadSubmit = function (req, res) {
   var results = [];
 
   var erststimme = req.body.Erststimme;
-  console.log("Erststimme: "+erststimme);
   var zweitstimme = req.body.Zweitstimme;
-  var wahlkreisID = req.body.wahlkreisId;
-  console.log("Wahlkreis: "+wahlkreisID);
-  var electorID = req.body.elector;
-  console.log("Elector: "+electorID);
-
+  var wahlkreisID = req.flash('wahlkreis')[0];
+  var electorID = req.flash('kennung')[0];
 
   console.log("Wahlkreis: "+wahlkreisID+", Elector: "+electorID+", Erststimme: "+erststimme+", Zweitstimme: "+zweitstimme);
 

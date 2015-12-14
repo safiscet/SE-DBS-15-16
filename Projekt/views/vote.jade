@@ -33,8 +33,8 @@ block content
         res.redirect("/submit/");
       }
     
-    label(name= "elector" hidden)= ergTable[1]
-    label(name= "wahlkreisId" hidden)= ergTable[0]
+    //label(name= "elector" hidden)= ergTable[1]
+    //label(name= "wahlkreisId" hidden)= ergTable[0]
     
     form(id= "submitForm" method= "post" action= "/submit/") 
       table.table.table-striped
@@ -50,24 +50,24 @@ block content
           each value, index in resTable
             tr
               th
-                input(type= "Radio" name= "Erststimme" value= value.candidateID)
-              th= value.candidate 
+                input(type= "radio" name= "Erststimme" value= value.candidateid)
+              th= value.candidate
               th= value.candidateparty
               th
-                input(type= "Radio" name= "Zweitstimme" value= value.partyID)
+                input(type= "radio" name= "Zweitstimme" value= value.partyid)
               th= value.abkuerzung 
-              th= value.party 
+              th= value.party
           tr
             th 
-              input(type= "Radio" name= "Erststimme" value= "noErststimme")
+              input(type= "radio" name= "Erststimme" value= "noErststimme")
             th ungültige Stimme
             th
             th
-              input(type= "Radio" name= "Zweitstimme" value= "noZweitstimme")
+              input(type= "radio" name= "Zweitstimme" value= "noZweitstimme")
             th ungültige Stimme
             th
 
-      button(name= "submitButton" type= submit onclick= "submit()") Stimme abgeben
+      button(name= "submitButton" type="submit" value="Submit") Stimme abgeben
       
     button(type= button, onclick="window.location='/'") Zurück
   

@@ -86,6 +86,7 @@ function checkData(req, res, results, id, birthday) {
     // Schicke Kennung und Geburtsdatum über Flash mit
     req.flash('kennung', id);
     req.flash('geburtsdatum', birthday);
+    req.flash('wahlkreis', results[0].wahlkreis);
     res.redirect("/vote/"+results[0].wahlkreis);
     // in vote dann auslesen über req.flash('kennung')
   }
