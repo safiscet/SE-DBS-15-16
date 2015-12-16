@@ -59,6 +59,9 @@ block content
       .attr('fill', function(d, i) {
         return color(d.data.party);
       })
+      .style("fill", function(d, i) {
+        return d.data.color;
+      })
       .each(function(d) { this._current = d; });
     // tooltip handling
     path.on('mouseover', function(d) {
