@@ -1,0 +1,1 @@
+﻿alter table elector add vote2017 boolean not null default false
