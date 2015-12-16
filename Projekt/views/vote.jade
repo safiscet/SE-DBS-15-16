@@ -14,27 +14,6 @@ block content
     
     each value in errorTable
       .alert.alert-danger= value
-      
-    script.
-      function submit(){
-        
-        var wahlkreisId = req.flash('wahlkreis')[0];
-        console.log(wahlkreisId);
-        alert(wahlkreisId);
-        var elector = req.flash('kennung')[0];
-        var erststimme = req.body.Erststimme;
-        var zweitstimme = req.body.Zweitstimme;
-          
-        req.flash('wahlkreisID', wahlkreisId);
-        req.flash('elector', elector);
-        req.flash('erststimme', erststimme);
-        req.flash('zweitstimme', zweitstimme);
-          
-        res.redirect("/submit/");
-      }
-    
-    //label(name= "elector" hidden)= ergTable[1]
-    //label(name= "wahlkreisId" hidden)= ergTable[0]
     
     form(id= "submitForm" method= "post" action= "/submit/") 
       table.table.table-striped
@@ -70,12 +49,12 @@ block content
       button(name= "submitButton" type="submit" value="Submit") Stimme abgeben
       
     button(type= button, onclick="window.location='/'") Zurück
-  
+    
     script.
       $(document).ready(function(){
-        var wahlkreisId = req.flash('wahlkreis')[0];
-        console.log(wahlkreisId);
-        alert(wahlkreisId);
-        var elector = req.flash('kennung')[0];   
-      });
-  
+        $("#submitForm input[type=radio]").each(function() {
+            if (this.value == "on"){
+              this.disabled = true;
+            }
+        });        
+      });  

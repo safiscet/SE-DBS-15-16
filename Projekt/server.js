@@ -79,22 +79,21 @@ app.get('/', function (req, res) {
 app.get('/auth', auth.loadAuth);
 app.post('/auth', auth.loadAuth);
 
-//Stimme abgeben
-app.get('/vote/(:wahlkreis)?', vote.loadVote
-/*function (req, res) {
-  // TODO zum Einfügen dann:
-  console.log(req.flash('kennung')[0]);
-  console.log(req.flash('geburtsdatum')[0]);
-  res.render('vote',
-  { title : 'Wählen'})
-});*/);
+//Stimmzettel generieren
+app.get('/vote/(:wahlkreis)?', vote.loadVote);
 app.post('/vote/(:wahlkreis)?', vote.loadVote);
 
-//app.get('/submit/:wahlkreisID/:electorID/:erststimme/:zweitstimme', submit.loadSubmit);
-//app.post('/submit/:wahlkreisID/:electorID/:erststimme/:zweitstimme', submit.loadSubmit);
-
+// Stimme abgeben
 app.get('/submit/', submit.loadSubmit);
 app.post('/submit/', submit.loadSubmit);
+
+//Stimmabgabe erfolgreich
+app.get('/success', function (req, res) {
+  res.render('submittedVote',
+    { title : 'Stimmeabgabe erfolgreich' }
+  )
+});
+
 // Q1 - Sitzverteilung
 app.get('/q1/', q1.loadQ1);
 // Q2 - Mitglieder des Bundestags
