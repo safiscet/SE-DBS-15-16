@@ -46,7 +46,7 @@ function loadData(req, res, pg, connectionString, id, birthday) {
       return res.status(500).json({ success: false, data: err});
     }
     var qbirthday = birthday.toString().substr(0,2) + "-"+ birthday.toString().substr(2,2) + "-" + birthday.toString().substr(4,4);
-    var query = client.query("SELECT id AS kennung, wahlkreis2013 AS wahlkreis, vote2013 AS voted FROM elector WHERE id = $1 AND birthday = $2", [id, qbirthday]);
+    var query = client.query("SELECT id AS kennung, wahlkreis2013 AS wahlkreis, vote2017 AS voted FROM elector WHERE id = $1 AND birthday = $2", [id, qbirthday]);
 
     query.on('row', function(row) {
       results.push(row);

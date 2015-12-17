@@ -9,7 +9,11 @@ exports.loadVote = function (req, res) {
   var kennung = req.flash('kennung')[0];
   var geburtsdatum = req.flash('geburtsdatum')[0];
 
-  if(kennung == undefined && geburtsdatum == undefined){
+  console.log(wahlkreisId);
+  console.log(kennung);
+  console.log(geburtsdatum);
+
+  if(kennung == undefined || geburtsdatum == undefined){
     //- Wenn man die Seite aufruft, ohne sich einzuloggen, wird man auf "auth" zurück geleitet
     res.redirect('/auth');
   } else {
@@ -25,7 +29,7 @@ exports.loadVote = function (req, res) {
         return res.status(500).json({ success: false, data: err});
       }
       var birthday = geburtsdatum.toString().substr(0,2) + "-"+ geburtsdatum.toString().substr(2,2) + "-" + geburtsdatum.toString().substr(4,4);
-      var query = client.query("SELECT id AS kennung, wahlkreis2013 AS wahlkreis, vote2013 AS voted FROM elector WHERE id = $1 AND birthday = $2", [kennung, birthday]);
+      var query = client.query("SELECT id AS kennung, wahlkreis2013 AS wahlkreis, vote2017 AS voted FROM elector WHERE id = $1 AND birthday = $2", [kennung, birthday]);
 
       query.on('row', function(row) {
         results.push(row);
