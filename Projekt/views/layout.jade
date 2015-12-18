@@ -22,7 +22,7 @@ html
         .sidebar
           .col-md-3.sidenav
             nav.navbar.navbar-default
-              ul.nav.nav-pills.nav-stacked
+              ul.nav.nav-pills.nav-stacked(id= "nav")
                 li
                   a(href='/') Home
                 li
@@ -47,3 +47,8 @@ html
       
     footer.container
       p.text-muted Running on node with Express, Jade and Stylus.
+      
+    script.
+      $(document).ready(function () {
+        $('ul.nav > li > a[href="' + document.location.pathname + '"]').parent().addClass('active');
+      });
