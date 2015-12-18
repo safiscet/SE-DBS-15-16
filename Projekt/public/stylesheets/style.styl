@@ -15,14 +15,15 @@ global-reset()
 main-color = #5c59ba
 main-font-color = #333
 background-color = #f2f1e5
+table-hover-color = #87c2ff
 
 body
-  font-family 'Georgia'
+  font-family Helvetica, sans-serif, Arial
   //background-color background-color
   color #444
 
 header
-  font-family 'Georgia'
+  font-family sans-serif, Helvetica, Arial
   padding 50px 10px
   color #fff
   font-size 35px
@@ -77,3 +78,6 @@ footer
   border-top 1px dotted #ccc
   margin 50px auto
   padding: 15px;
+
+.table tbody tr:hover td, .table tbody tr:hover th
+  background-color: table-hover-color
