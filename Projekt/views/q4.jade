@@ -10,11 +10,17 @@ block content
             th Nr.
             th Wahlkreis
             th Siegerpartei Erststimmen
+            th
             th Siegerpartei Zweitstimmen
+            th
         tbody
           each value, index in resTable
             tr
               th= value.nummer
               th= value.wahlkreis
               th= value.winnerpartyerststimmen
+              th(style= "width:30px; background-color:"+ value.erstcolor)
               th= value.winnerpartyzweitstimmen
+              th(style= "width:30px; background-color:"+ value.zweitcolor)
+            
+          
