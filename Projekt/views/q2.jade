@@ -10,6 +10,7 @@ block content
           th Nr.
           th Kandidat
           th Partei
+          th
           th Bundesland
       tbody
           each value, index in resTable
@@ -17,4 +18,5 @@ block content
               th= index+1
               th= value.candidate
               th= value.party
+              th(style= "width:30px; background-color:"+ value.color)
               th= value.federalland

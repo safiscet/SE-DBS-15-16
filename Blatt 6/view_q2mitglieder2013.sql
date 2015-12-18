@@ -36,10 +36,10 @@ union
 select * from kreisWinner) order by party, federalland, candidate
 )
 
-select c.name as candidate, p.abkuerzung as party, f.name as federalland
+select c.name as candidate, p.abkuerzung as party, f.name as federalland, p.color as color
 from winners w, candidate c, party p, federalland f
 where w.candidate = c.id
 and w.party = p.id
 and w.federalland = f.id
-order by p.abkuerzung, f.name, c.name
+order by c.name, p.abkuerzung, f.name
 );
