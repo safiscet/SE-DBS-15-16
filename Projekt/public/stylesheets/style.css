@@ -150,6 +150,9 @@ button {
   width: 150px;
   margin: 20px;
 }
+select {
+  margin-bottom: 20px;
+}
 footer {
   border-top: 1px dotted #ccc;
   margin: 50px auto;
