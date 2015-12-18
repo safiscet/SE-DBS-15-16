@@ -22,14 +22,14 @@ block content
         .col-md-8
           input.form-control#kennung(type="text", name="kennung", placeholder="Bitte die Kennung eingeben", value= kenVal)
         .col-md-2
-          a(href="#", title="Kennung", data-toggle="popover", data-trigger="focus", data-content="Die Kennung darf nur aus Ziffern bestehen und muss einer für die Wahl ausgeteilten Kennung entsprechen.")
+          a(href="#", data-toggle="tooltip", title="Die Kennung darf nur aus Ziffern bestehen und muss einer für die Wahl ausgeteilten Kennung entsprechen.")
             span.glyphicon.glyphicon-info-sign
       .form-group
         label.control-label.col-md-2(for="geburtsdatum") Geburtsdatum:
         .col-md-8
           input.form-control#geburtsdatum(type="text", name="geburtsdatum", placeholder="Bitte das Geburtsdatum eingeben der Form TTMMJJJJ", value= gebVal)
         .col-md-2
-          a(href="#", title="Geburtsdatum", data-toggle="popover", data-trigger="focus", data-content="Als zusätzliches Authentifikationsmerkmal dient Ihr Geburtsdatum. Bitte geben Sie dies in der Form TTMMJJJJ ein. Ist Ihr Geburtstag beispielsweise am 11.01.1990, geben Sie 11011990 an.")
+          a(href="#", data-toggle="tooltip" title="Als zusätzliches Authentifikationsmerkmal dient Ihr Geburtsdatum. Bitte geben Sie dies in der Form TTMMJJJJ ein. Ist Ihr Geburtstag beispielsweise am 11.01.1990, geben Sie 11011990 an.")
             span.glyphicon.glyphicon-info-sign
       .form-group
         .col-md-offset-2.col-md-10
@@ -37,7 +37,7 @@ block content
           
     script.
       $(document).ready(function(){
-        $('[data-toggle="popover"]').popover();   
+        $('[data-toggle="tooltip"]').tooltip();
       });
     
     
