@@ -9,19 +9,51 @@ block content
         each value, index in parties
           option(value= value.id)= value.party
           
-      table.table.table-striped
+      table.table.table-striped(id= "table")
         thead
           tr
             th Partei
             th Rang
             th Kandidat
             th Differenz
-            th Sieger
-        tbody
+            th 
+        tbody(id= "body")
             each value, index in resTable
               tr
                 th= value.candidateparty
                 th= value.rank
                 th= value.candidatename
-                th= value.difference
-                th= value.winner
+                th(name= "diff")= value.difference
+                th(name= "winner" style= "color:black")= value.winner 
+       
+
+
+      script.
+        $(document).ready(function(){
+          // if table is empty, then hide it
+          if(document.getElementById("body").innerHTML == ""){
+            document.getElementById("table").style.display = "none";
+          }
+          $(document.getElementsByName("winner")).each(function() {
+              // write winner or looser in the right color at the end of each row
+              if (this.innerHTML == "false"){
+                this.innerHTML = "Verlierer";
+                this.style.color = "red";
+                // add to the value of diff a minus
+                $(document.getElementsByName("diff")).each(function() {
+                  if(this.innerHTML.indexOf("-") == -1){
+                    this.innerHTML = "- "+ this.innerHTML;
+                  }
+                });
+              } else {
+                this.innerHTML = "Gewinner";
+                this.style.color = "green";
+                // add to the value of diff a plus
+                $(document.getElementsByName("diff")).each(function() {
+                  if(this.innerHTML.indexOf("+") == -1){
+                    this.innerHTML = "+ "+ this.innerHTML;
+                  }
+                });
+              }
+          });     
+        });
