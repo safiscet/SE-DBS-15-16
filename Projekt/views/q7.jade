@@ -10,39 +10,44 @@ block content
           option(value= value.nummer)= value.nummer + " - " + value.wahlkreis
 
 
-      table.table.table-striped
+      table.table.table-striped(id= "table1")
         thead
           tr
             th Nr.
             th Wahlkreis
             th Wahlbeteiligung
             th Siegerkandidat
-        tbody
+        tbody(id= "body1")
           each value, index in resTable
             tr
               th= value.nummer
               th= value.wahlkreis
-              th= ((value.wahlbeteiligung)*100).toFixed(2) + "%"
+              th= ((value.wahlbeteiligung)*100).toFixed(2) + " %"
               th= value.candidate
 
            
-      table.table.table-striped
-      thead
-        tr
-          //th Wahlkreis
-          th Partei
-          th Anzahl der Zweitstimmen 2013
-          th Anzahl der Zweitstimmen 2009
-          th Prozent der Zweitstimmen 2013
-          th Prozent der Zweitstimmen 2009
-      tbody
-        each value, index in ergTable 
+      table.table.table-striped(id= "table2")
+        thead
           tr
-            //th= value.wahlkreis
-            th= value.party
-            th= value.zweitstimmenabsolute
-            th= value.zweitstimmenabsolute2009
-            th= ((value.zweitstimmenpercent)*100).toFixed(2) + "%"
-            th= ((value.zweitstimmenpercent2009)*100).toFixed(2) + "%"
-            
-//#{content}
+            th Partei
+            th Anzahl der Zweitstimmen 2013
+            th Anzahl der Zweitstimmen 2009
+            th Prozent der Zweitstimmen 2013
+            th Prozent der Zweitstimmen 2009
+        tbody(id= "body2")
+          each value, index in ergTable 
+            tr
+              th= value.party
+              th= value.zweitstimmenabsolute
+              th= value.zweitstimmenabsolute2009
+              th= ((value.zweitstimmenpercent)*100).toFixed(2) + " %"
+              th= ((value.zweitstimmenpercent2009)*100).toFixed(2) + " %"
+              
+      script.
+        $(document).ready(function(){
+          // if table is empty, then hide it
+          if(document.getElementById("body2").innerHTML == ""){
+            document.getElementById("table1").style.display = "none";
+            document.getElementById("table2").style.display = "none";
+          }
+        });

@@ -7,8 +7,7 @@ exports.loadQ7 = function (req, res) {
   var wahlkreisForOption = [];
 
   var wahlkreisId = req.params.wahlkreisId;
-  console.log(wahlkreisId);
-
+  
   pg.connect(connectionString, function(err, client, done) {
     if(err) {
       done();
@@ -18,23 +17,20 @@ exports.loadQ7 = function (req, res) {
     // SQL Query > Select Data
     var query3 = client.query("SELECT * FROM q7wahlkreisuebersicht2013");
 
-    if(wahlkreisId == undefined){
-      var query = client.query("SELECT * FROM q7wahlkreisuebersicht2013");
-      var query2 = client.query("SELECT q13.wahlkreis, q13.party, q13.zweitstimmenabsolute, q13.zweitstimmenpercent, q9.zweitstimmenabsolute2009, q9.zweitstimmenpercent2009 FROM q7wahlkreisparty2013 q13 JOIN q7wahlkreisparty2009 q9 ON q13.wahlkreis = q9.wahlkreis WHERE q13.party = q9.party");
-    } else {
+    if(wahlkreisId != undefined){
       var query = client.query("SELECT * FROM q7wahlkreisuebersicht2013 WHERE nummer = "+wahlkreisId);
       var query2 = client.query("SELECT q13.wahlkreis, q13.party, q13.zweitstimmenabsolute, q13.zweitstimmenpercent, q9.zweitstimmenabsolute2009, q9.zweitstimmenpercent2009 FROM q7wahlkreisparty2013 q13 JOIN q7wahlkreisparty2009 q9 ON q13.wahlkreis = q9.wahlkreis JOIN wahlkreis w ON w.name = q13.wahlkreis WHERE q13.party = q9.party AND w.id ="+wahlkreisId);
+
+      // Stream results back one row at a time
+      query.on('row', function(row) {
+        results.push(row);
+      });
+
+      // Stream results back one row at a time
+      query2.on('row', function(row) {
+        erg.push(row);
+      });
     }
-
-    // Stream results back one row at a time
-    query.on('row', function(row) {
-      results.push(row);
-    });
-
-    // Stream results back one row at a time
-    query2.on('row', function(row) {
-      erg.push(row);
-    });
 
     // Stream results back one row at a time
     query3.on('row', function(row) {
@@ -44,7 +40,7 @@ exports.loadQ7 = function (req, res) {
     client.on('drain', function() {
       done();
 
-      res.render('q3',
+      res.render('q7',
       {
         title : 'Wahlkreisübersicht',
         optionTable : wahlkreisForOption,
