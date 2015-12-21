@@ -4,7 +4,7 @@ block content
       h1 Wahlkreisübersicht
 
     .main-results
-      select.form-control(id="federallands")
+      select.form-control(id="federallands", onchange= "updateSelection(this.value)")
         option(value= "")= "- Bitte Bundesland auswählen -"
         each value, index in federallandOptionTable
           option(value= value.nummer)= value.nummer + " - " + value.name
@@ -58,3 +58,38 @@ block content
             document.getElementById("table2").style.display = "none";
           }
         });
+        
+        function updateSelection(nummer){
+          select = document.getElementById("wahlkreise");
+          for(i=(select.options.length-1); i>=1; i--){
+            select.remove(i);
+          }
+    
+          var map = new Map();
+          map[1] = [1, 11];
+          map[2] = [18, 23];
+          map[3] = [24, 53];
+          map[4] = [54, 55];
+          map[5] = [87, 150];
+          map[6] = [167, 188];
+          map[7] = [198, 212];
+          map[8] = [258, 295];
+          map[9] = [213, 257];
+          map[10] = [296, 299];
+          map[11] = [75, 86];
+          map[12] = [56, 65];
+          map[13] = [12, 17];
+          map[14] = [151, 166];
+          map[15] = [66, 74];
+          map[16] = [189, 197];
+        
+          var array = map[nummer];
+          var options = !{JSON.stringify(optionTable)};
+          for(i=0; i<options.length; i++){
+            if(options[i].nummer >= array[0] && options[i].nummer <= array[1]){
+              select.options[select.options.length] = new Option(options[i].nummer + " - " + options[i].wahlkreis);
+              select.options[select.options.length-1].value = options[i].nummer;
+            }
+          }
+        
+        }
