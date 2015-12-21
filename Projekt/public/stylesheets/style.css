@@ -153,6 +153,12 @@ button {
 select {
   margin-bottom: 20px;
 }
+#header-link {
+  text-decoration: none;
+}
+#header-link:hover {
+  color: #87c2ff;
+}
 footer {
   border-top: 1px dotted #ccc;
   margin: 50px auto;
