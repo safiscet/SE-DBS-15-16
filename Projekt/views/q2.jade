@@ -1,8 +1,14 @@
 extend layout
 block content
   .page-header
-    h1 Mitglieder des Bundestags
-    
+    h1 Mitglieder des Bundestags #{year}
+  
+  .btn-group
+    a(href="/q2/2009/")
+      button.btn.btn-primary.btn-lg(type="button") 2009
+    a(href="/q2/2013/")
+      button.btn.btn-primary.btn-lg(type="button") 2013  
+  
   .main-results 
     table.table.table-striped
       thead

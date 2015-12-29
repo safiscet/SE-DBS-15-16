@@ -1,7 +1,13 @@
 extend layout    
 block content
     .page-header
-      h1 Wahlkreisübersicht (Berechnung auf Einzelstimmen)
+      h1 Wahlkreisübersicht #{year} (Berechnung auf Einzelstimmen)
+      
+    .btn-group
+      a(href="/q7/2009/")
+        button.btn.btn-primary.btn-lg(type="button") 2009
+      a(href="/q7/2013/")
+        button.btn.btn-primary.btn-lg(type="button") 2013
 
     .main-results
       select.form-control(id="wahlkreise", onchange= "window.location=this.value")

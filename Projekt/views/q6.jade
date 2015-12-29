@@ -1,7 +1,13 @@
 extend layout
 block content
     .page-header
-      h1 Knappste Sieger
+      h1 Knappste Sieger #{year}
+      
+    .btn-group
+      a(href="/q6/2009/")
+        button.btn.btn-primary.btn-lg(type="button") 2009
+      a(href="/q6/2013/")
+        button.btn.btn-primary.btn-lg(type="button") 2013
   
     .main-results 
       select.form-control(id="parteien", onChange="window.location=this.value")

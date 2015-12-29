@@ -95,19 +95,19 @@ app.get('/success', function (req, res) {
 });
 
 // Q1 - Sitzverteilung
-app.get('/q1/', q1.loadQ1);
+app.get('/q1/(:year)/', q1.loadQ1);
 // Q2 - Mitglieder des Bundestags
-app.get('/q2/', q2.loadQ2);
+app.get('/q2/(:year)/', q2.loadQ2);
 // Q3 - Wahlkreisübersicht
-app.get('/q3/(:wahlkreisId)?', q3.loadQ3);
+app.get('/q3/(:year)/(:wahlkreisId)?', q3.loadQ3);
 // Q4 - Wahlkreissieger
-app.get('/q4/', q4.loadQ4);
+app.get('/q4/(:year)/', q4.loadQ4);
 // Q5 - Überhangmandate
-app.get('/q5/', q5.loadQ5);
+app.get('/q5/(:year)/', q5.loadQ5);
 // Q6 - Knappste Sieger
-app.get('/q6/(:party)?', q6.loadQ6);
+app.get('/q6/(:year)/(:party)?', q6.loadQ6);
 // Q7 - Einzelstimmen (Wahlkreisübersicht)
-app.get('/q7/(:wahlkreisId)?', q7.loadQ7);
+app.get('/q7/(:year)/(:wahlkreisId)?', q7.loadQ7);
 
 // listen and start application
 app.listen(8080);

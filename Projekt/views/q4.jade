@@ -1,7 +1,13 @@
 extend layout
 block content
     .page-header
-      h1 Wahlkreissieger
+      h1 Wahlkreissieger #{year}
+      
+    .btn-group
+      a(href="/q4/2009/")
+        button.btn.btn-primary.btn-lg(type="button") 2009
+      a(href="/q4/2013/")
+        button.btn.btn-primary.btn-lg(type="button") 2013
 
     .main-results
       table.table.table-striped

@@ -1,8 +1,16 @@
 extend layout
 block content
   .page-header
-    h1 Sitzverteilung des Bundestags
-
+    h1
+      | Sitzverteilung des Bundestags #{year}
+    
+  
+  .btn-group
+    a(href="/q1/2009/")
+      button.btn.btn-primary.btn-lg(type="button") 2009
+    a(href="/q1/2013/")
+      button.btn.btn-primary.btn-lg(type="button") 2013
+  
   .main-results.col-md-4 
     table.table.table-striped
       thead
