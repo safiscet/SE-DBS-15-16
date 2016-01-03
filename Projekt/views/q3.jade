@@ -19,8 +19,10 @@ block content
         option(value= "")= "- Bitte Wahlkreis auswählen -"
         each value, index in optionTable
           option(value= value.nummer)= value.nummer + " - " + value.wahlkreis
-
-
+      
+      each value in errorTable
+        .alert.alert-danger= value
+      
       table.table.table-striped(id= "table1")
         thead
           tr

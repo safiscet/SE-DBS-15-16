@@ -6,6 +6,8 @@ exports.loadQ3 = function (req, res) {
   var erg = [];
   var wahlkreisForOption = [];
   var federallandForOption = [];
+  var errorTable = [];
+
   var year = 2013;
   var paramYear = req.params.year;
   if(paramYear == 2009 || paramYear == 2013)
@@ -29,8 +31,14 @@ exports.loadQ3 = function (req, res) {
       //var query = client.query("SELECT * FROM q3wahlkreisuebersicht2013");
       //var query2 = client.query("SELECT q13.wahlkreis, q13.party, q13.zweitstimmenabsolute, q13.zweitstimmenpercent, q9.zweitstimmenabsolute2009, q9.zweitstimmenpercent2009 FROM q3wahlkreisparty2013 q13 JOIN q3wahlkreisparty2009 q9 ON q13.wahlkreis = q9.wahlkreis WHERE q13.party = q9.party");
     } else {
-      var query = client.query("SELECT * FROM q3wahlkreisuebersicht"+year+" WHERE nummer = "+wahlkreisId);
-      var query2 = client.query("SELECT q13.wahlkreis, q13.party, q13.zweitstimmenabsolute, q13.zweitstimmenpercent, q9.zweitstimmenabsolute2009, q9.zweitstimmenpercent2009 FROM q3wahlkreisparty2013 q13 JOIN q3wahlkreisparty2009 q9 ON q13.wahlkreis = q9.wahlkreis JOIN wahlkreis w ON w.name = q13.wahlkreis WHERE q13.party = q9.party AND w.id ="+wahlkreisId);
+      var wahlkreisInt = parseInt(wahlkreisId);
+      console.log(wahlkreisInt);
+      if(isNaN(wahlkreisInt) || wahlkreisInt < 1 || wahlkreisInt > 299){
+        wahlkreisInt = 1;
+        errorTable.push("Der gewählte Wahlkreis existiert nicht. Es werden Beispiel-Ergebnisse für Flensburg - Schleswig angezeigt.");
+      }
+      var query = client.query("SELECT * FROM q3wahlkreisuebersicht"+year+" WHERE nummer = $1", [wahlkreisInt]);
+      var query2 = client.query("SELECT q13.wahlkreis, q13.party, q13.zweitstimmenabsolute, q13.zweitstimmenpercent, q9.zweitstimmenabsolute2009, q9.zweitstimmenpercent2009 FROM q3wahlkreisparty2013 q13 JOIN q3wahlkreisparty2009 q9 ON q13.wahlkreis = q9.wahlkreis JOIN wahlkreis w ON w.name = q13.wahlkreis WHERE q13.party = q9.party AND w.id = $1", [wahlkreisInt]);
 
       // Stream results back one row at a time
       query.on('row', function(row) {
@@ -63,6 +71,7 @@ exports.loadQ3 = function (req, res) {
       { title : 'Wahlkreisübersicht',
         year : year,
         optionTable : wahlkreisForOption,
+        errorTable : errorTable,
         federallandOptionTable: federallandForOption,
         ergTable : erg,
         resTable : results

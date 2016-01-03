@@ -31,6 +31,9 @@ block content
                 th= value.candidatename
                 th(name= "diff")= value.difference
                 th(name= "winner" style= "color:black")= value.winner 
+                
+      each value in errorTable
+        .alert.alert-danger= value
        
 
 

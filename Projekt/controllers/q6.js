@@ -20,8 +20,8 @@ exports.loadQ6 = function (req, res) {
 
     // SQL Query > Select Data
     var query2 = client.query("SELECT p.id, p.abkuerzung as party FROM partyinelection e, party p WHERE e.party = p.id AND e.year = "+year+" AND erststimmen > 0 ORDER BY p.abkuerzung");
-
-    if(partyId != undefined){
+    var partyInt = parseInt(partyId);
+    if(partyId != undefined && !isNaN(partyInt) && partyInt >= 1 && partyInt <= 40){
       var query = client.query("SELECT * FROM q6tightestwinner"+year+" q, party p WHERE q.candidateparty = p.abkuerzung AND p.id ="+partyId);
 
       // Stream results back one row at a time
@@ -37,11 +37,15 @@ exports.loadQ6 = function (req, res) {
     // After all data is returned, close connection and return results
     client.on('drain', function() {
       done();
+      var errorTable = [];
+      if(results.length == 0)
+        errorTable.push("Die gewählte Partei ist in diesem Jahr nicht angetreten oder existiert nicht.");
       res.render('q6',
         { title : 'Knappste Sieger',
           year : year,
-        parties : parties,
-        resTable : results});
+          errorTable : errorTable,
+          parties : parties,
+          resTable : results});
     });
 
 

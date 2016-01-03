@@ -1,0 +1,12 @@
+extend layout
+block content
+  .page-header
+    h1 Ihre Stimme wurde nicht erfolgreich abgeben
+    
+  .main-results
+  
+  each value in errorTable
+    .alert.alert-danger= value
+
+  button.vote(type= button, onclick="window.location='/'") Zur Startseite
+  

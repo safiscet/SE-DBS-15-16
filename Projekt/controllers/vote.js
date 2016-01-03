@@ -6,18 +6,44 @@ exports.loadVote = function (req, res) {
   var errorTable = [];
 
   var wahlkreisId = req.params.wahlkreis;
-  var kennung = req.flash('kennung')[0];
-  var geburtsdatum = req.flash('geburtsdatum')[0];
+  var kenString = req.flash('kennung')[0];
+  var gebString = req.flash('geburtsdatum')[0];
+  var wahlkreisIdFlash = req.flash('wahlkreis')[0];
 
   console.log(wahlkreisId);
-  console.log(kennung);
-  console.log(geburtsdatum);
+  console.log(kenString);
+  console.log(gebString);
 
-  if(kennung == undefined || geburtsdatum == undefined){
+  if(kenString == undefined || gebString == undefined){
     //- Wenn man die Seite aufruft, ohne sich einzuloggen, wird man auf "auth" zurück geleitet
     res.redirect('/auth');
   } else {
-    loadData(req, res, pg, connectionString, parseInt(kennung), geburtsdatum);
+
+    var kennung = parseInt(kenString);
+    var geburtsdatum = parseInt(gebString);
+
+    if(isNaN(kennung)){
+      errorTable.push("Die eingegebene Kennung war keine Zahl.");
+    }
+    if(isNaN(geburtsdatum)){
+      errorTable.push("Das eingegebene Geburtsdatum war keine Zahl.");
+    }
+
+    if(!checkBirthday(gebString)){
+      errorTable.push("Das eingegebene Geburtsdatum hatte ein inkorrektes Format.");
+    }
+
+    if(wahlkreisId != wahlkreisIdFlash){
+      errorTable.push("Der gewählte Wahlkreis ist ungültig. Bitte melden Sie sich erneut an.");
+    }
+
+    if(errorTable.length == 0){
+      // Bisher keine Fehler, überprüfe die Einträge in der Datenbank
+      loadData(req, res, pg, connectionString, kennung, gebString);
+    } else {
+      // Es gibt schon Fehler, zeige diese an und verlange neue Eingabe
+      render(res, errorTable, kenString, gebString);
+    }
   }
 
   function loadData(req, res, pg, connectionString, kennung, geburtsdatum) {
@@ -43,7 +69,7 @@ exports.loadVote = function (req, res) {
   }
 
   function checkData(req, res, results, kennung, geburtsdatum) {
-    if(results == undefined || results.length != 1 || results[0].voted){
+    if(results == undefined || results.length != 1 || results[0].voted || results[0].wahlkreis != wahlkreisId){
       render(res, ["Sie sind nicht eingeloggt"], kennung, geburtsdatum);
     }
     else {
@@ -56,7 +82,7 @@ exports.loadVote = function (req, res) {
 
         //- SQL Query > Select Data
         if(wahlkreisId != undefined){
-          var query = client.query("WITH tmp as (select cie.wahlkreis, c.id as candidateID, c.name as candidate, p.abkuerzung as candidateparty FROM candidateInElection cie JOIN candidate c ON cie.candidate = c.id JOIN party p ON p.id = cie.party WHERE cie.year = 2013 AND cie.party = p.id AND cie.wahlkreis = "+wahlkreisId+") SELECT w.id as wahlkreisID, w.name as wahlkreis, r.federalland, p.abkuerzung, p.id as partyID, tmp.candidate as candidate, tmp.candidateID as candidateID, tmp.candidateparty as candidateparty, p.name as party FROM runsforelection r JOIN wahlkreis w ON r.federalland = w.federalland JOIN party p ON p.id = r.party LEFT JOIN tmp ON tmp.candidateparty = p.abkuerzung WHERE r.year = 2013 AND p.abkuerzung <> 'PARTEILOSE' AND w.id = "+wahlkreisId);
+          var query = client.query("WITH tmp as (select cie.wahlkreis, c.id as candidateID, c.name as candidate, p.abkuerzung as candidateparty FROM candidateInElection cie JOIN candidate c ON cie.candidate = c.id JOIN party p ON p.id = cie.party WHERE cie.year = 2013 AND cie.party = p.id AND cie.wahlkreis = "+wahlkreisId+") SELECT w.id as wahlkreisID, w.name as wahlkreis, r.federalland, p.abkuerzung, p.id as partyID, tmp.candidate as candidate, tmp.candidateID as candidateID, tmp.candidateparty as candidateparty, p.name as party FROM runsforelection r JOIN wahlkreis w ON r.federalland = w.federalland JOIN party p ON p.id = r.party LEFT JOIN tmp ON tmp.candidateparty = p.abkuerzung WHERE r.year = 2013 AND p.abkuerzung <> 'PARTEILOSE' AND w.id = $1", [wahlkreisId]);
         }
 
         //- Stream results back one row at a time
@@ -81,6 +107,23 @@ exports.loadVote = function (req, res) {
 
       });
     }
+  }
+
+  function checkBirthday(gebString){
+    var format = true;
+    if(gebString.length != 8){
+      format = false;
+    }
+    else if(gebString.substr(0,2) < 1 || gebString.substr(0,2) > 31){
+      format = false;
+    }
+    else if(gebString.substr(2,2) < 1 || gebString.substr(2,2) > 12){
+      format = false;
+    }
+    else if(gebString.substr(4,4) < 1900 || gebString.substr(4,4) > 2100) {
+      format = false;
+    }
+    return format;
   }
 
   function render(res, errorTable, kennung, geburtsdatum) {
