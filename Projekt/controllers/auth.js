@@ -1,7 +1,7 @@
 exports.loadAuth = function (req, res) {
 
   var pg = require('pg');
-  var connectionString = "postgres://postgres:admin@localhost:5432/bundestagswahlergebnisse";
+  var db = require('./db');
 
   var kenString = req.body.kennung;
   var gebString = req.body.geburtsdatum;
@@ -29,7 +29,7 @@ exports.loadAuth = function (req, res) {
 
     if(errorTable.length == 0){
       // Bisher keine Fehler, überprüfe die Einträge in der Datenbank
-      loadData(req, res, pg, connectionString, kennung, gebString);
+      loadData(req, res, pg, db.connectionString, kennung, gebString);
     } else {
       // Es gibt schon Fehler, zeige diese an und verlange neue Eingabe
       render(res, errorTable, kenString, gebString);

@@ -1,7 +1,7 @@
 exports.loadVote = function (req, res) {
 
   var pg = require('pg');
-  var connectionString = "postgres://postgres:admin@localhost:5432/bundestagswahlergebnisse";
+  var db = require('./db');
   var results2 = [];
   var errorTable = [];
 
@@ -39,7 +39,7 @@ exports.loadVote = function (req, res) {
 
     if(errorTable.length == 0){
       // Bisher keine Fehler, überprüfe die Einträge in der Datenbank
-      loadData(req, res, pg, connectionString, kennung, gebString);
+      loadData(req, res, pg, db.connectionString, kennung, gebString);
     } else {
       // Es gibt schon Fehler, zeige diese an und verlange neue Eingabe
       render(res, errorTable, kenString, gebString);
@@ -73,7 +73,7 @@ exports.loadVote = function (req, res) {
       render(res, ["Sie sind nicht eingeloggt"], kennung, geburtsdatum);
     }
     else {
-      pg.connect(connectionString, function(err, client, done) {
+      pg.connect(db.connectionString, function(err, client, done) {
         if(err) {
           done();
           console.log(err);

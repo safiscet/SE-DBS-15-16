@@ -1,8 +1,9 @@
 exports.loadQ6 = function (req, res) {
   var pg = require('pg');
-  var connectionString = "postgres://postgres:admin@localhost:5432/bundestagswahlergebnisse";
+  var db = require('./db');
   var results = [];
   var parties = [];
+  var partySelected = false;
 
   var partyId = req.params.party;
 
@@ -11,7 +12,7 @@ exports.loadQ6 = function (req, res) {
   if(paramYear == 2009 || paramYear == 2013)
     year = paramYear;
 
-  pg.connect(connectionString, function(err, client, done) {
+  pg.connect(db.connectionString, function(err, client, done) {
     if(err) {
       done();
       console.log(err);
@@ -23,7 +24,7 @@ exports.loadQ6 = function (req, res) {
     var partyInt = parseInt(partyId);
     if(partyId != undefined && !isNaN(partyInt) && partyInt >= 1 && partyInt <= 40){
       var query = client.query("SELECT * FROM q6tightestwinner"+year+" q, party p WHERE q.candidateparty = p.abkuerzung AND p.id ="+partyId);
-
+      partySelected = true;
       // Stream results back one row at a time
       query.on('row', function(row) {
         results.push(row);
@@ -38,7 +39,7 @@ exports.loadQ6 = function (req, res) {
     client.on('drain', function() {
       done();
       var errorTable = [];
-      if(results.length == 0)
+      if(results.length == 0 && partySelected)
         errorTable.push("Die gewählte Partei ist in diesem Jahr nicht angetreten oder existiert nicht.");
       res.render('q6',
         { title : 'Knappste Sieger',

@@ -1,7 +1,7 @@
 exports.loadQ3 = function (req, res) {
 
   var pg = require('pg');
-  var connectionString = "postgres://postgres:admin@localhost:5432/bundestagswahlergebnisse";
+  var db = require('./db');
   var results = [];
   var erg = [];
   var wahlkreisForOption = [];
@@ -16,7 +16,7 @@ exports.loadQ3 = function (req, res) {
   var wahlkreisId = req.params.wahlkreisId;
   console.log(wahlkreisId);
 
-  pg.connect(connectionString, function(err, client, done) {
+  pg.connect(db.connectionString, function(err, client, done) {
     if(err) {
       done();
       console.log(err);

@@ -1,14 +1,14 @@
 exports.loadQ5 = function (req, res) {
 
   var pg = require('pg');
-  var connectionString = "postgres://postgres:admin@localhost:5432/bundestagswahlergebnisse";
+  var db = require('./db');
   var results = [];
   var year = 2013;
   var paramYear = req.params.year;
   if(paramYear == 2009 || paramYear == 2013)
     year = paramYear;
 
-  pg.connect(connectionString, function(err, client, done) {
+  pg.connect(db.connectionString, function(err, client, done) {
     if(err) {
       done();
       console.log(err);

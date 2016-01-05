@@ -1,7 +1,7 @@
 exports.loadSubmit = function (req, res) {
 
   var pg = require('pg');
-  var connectionString = "postgres://postgres:admin@localhost:5432/bundestagswahlergebnisse";
+  var db = require('./db');
   var results = [];
 
   var erststimme = req.body.Erststimme;
@@ -18,7 +18,7 @@ exports.loadSubmit = function (req, res) {
     renderErrorMessage();
   } else {
 
-    pg.connect(connectionString, function(err, client, done) {
+    pg.connect(db.connectionString, function(err, client, done) {
       if(err) {
         done();
         console.log(err);
@@ -78,7 +78,7 @@ exports.loadSubmit = function (req, res) {
 
   function submitVote() {
 
-    pg.connect(connectionString, function(err, client, done) {
+    pg.connect(db.connectionString, function(err, client, done) {
       if(err) {
         done();
         console.log(err);

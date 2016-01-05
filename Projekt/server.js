@@ -12,7 +12,7 @@ cookieParser = require('cookie-parser');
 session = require('express-session');
 
 var pg = require('pg');
-var connectionString = "postgres://postgres:admin@localhost:5432/bundestagswahlergebnisse";
+var connectionString = "postgres://elector:12345@localhost:5432/bundestagswahlergebnisse";
 
 // local dependencies
 var q1 = require("./controllers/q1"),
