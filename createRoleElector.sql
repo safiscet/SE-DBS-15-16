@@ -1,0 +1,10 @@
+﻿CREATE ROLE elector LOGIN PASSWORD '12345'
+ VALID UNTIL 'infinity';
+
+GRANT SELECT, REFERENCES ON ALL TABLES IN SCHEMA public TO elector;
+GRANT CONNECT, TEMPORARY ON DATABASE bundestagswahlergebnisse TO elector;
+GRANT INSERT ON vote TO elector;
+GRANT UPDATE ON elector, wahlkreisinelection TO elector;
+GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA public TO elector;
+GRANT USAGE ON SCHEMA public TO elector;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO elector;
