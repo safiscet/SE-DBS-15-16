@@ -36,10 +36,10 @@ exports.loadSubmit = function (req, res) {
         query = client.query("SELECT e.id AS elector FROM elector e WHERE e.id = $1 AND NOT e.vote2017 AND e.wahlkreis2013 = $2", [electorID, wahlkreisID]);
       }
       else if(erststimme == "noErststimme" && zweitstimme != null){
-        query =client.query("SELECT e.id AS elector, c.candidate FROM elector e, candidateinelection c WHERE e.id = $1 AND NOT e.vote2017 AND e.wahlkreis2013 = $2 AND c.candidate = $3 AND c.year = 2013 AND c.wahlkreis = $2", [electorID, wahlkreisID, erststimme]);
+        query = client.query("SELECT e.id AS elector, r.party FROM elector e, runsforelection r, wahlkreis w WHERE e.id = $1 AND NOT e.vote2017 AND e.wahlkreis2013 = $2 AND w.id = $2 AND w.federalland = r.federalland AND r.year = 2013 AND r.party = $3", [electorID, wahlkreisID, zweitstimme]);
       }
       else if(zweitstimme == "noZweitstimme" && erststimme != null){
-        query = client.query("SELECT e.id AS elector, r.party FROM elector e, runsforelection r, wahlkreis w WHERE e.id = $1 AND NOT e.vote2017 AND e.wahlkreis2013 = $2 AND w.id = $2 AND w.federalland = r.federalland AND r.year = 2013 AND r.party = $3", [electorID, wahlkreisID, zweitstimme]);
+        query =client.query("SELECT e.id AS elector, c.candidate FROM elector e, candidateinelection c WHERE e.id = $1 AND NOT e.vote2017 AND e.wahlkreis2013 = $2 AND c.candidate = $3 AND c.year = 2013 AND c.wahlkreis = $2", [electorID, wahlkreisID, erststimme]);
       }
       else if(erststimme != null && zweitstimme != null){
         query = client.query("SELECT e.id AS elector, c.candidate, r.party FROM elector e, candidateinelection c, runsforelection r WHERE e.id = $1 AND NOT e.vote2017 AND e.wahlkreis2013 = $2 AND c.candidate = $3 AND c.year = 2013 AND c.wahlkreis = $2 AND c.federalland = r.federalland AND r.year = 2013 AND r.party = $4", [electorID, wahlkreisID, erststimme, zweitstimme]);
