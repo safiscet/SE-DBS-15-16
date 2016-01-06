@@ -1,16 +1,17 @@
 extend layout
+
 block content
   .page-header
     h1
       | Sitzverteilung des Bundestags #{year}
     
-  
   .btn-group
     a(href="/q1/2009/")
       button.btn.btn-primary.btn-lg(type="button") 2009
     a(href="/q1/2013/")
       button.btn.btn-primary.btn-lg(type="button") 2013
   
+
   .main-results.col-md-4 
     table.table.table-striped
       thead
@@ -24,6 +25,12 @@ block content
             th= value.seats
             
   .chart.col-md-8
+  
+  .coalitions
+  
+  .alert.alert-info
+    | Hier können Sie mögliche Koalitionen mit bis zu drei koalierenden Parteien sehen. 
+    | Die benötigte Mindestzahl an Sitzen wird als gestrichelte Linie dargestellt.
       
   script.
     var dataset = !{JSON.stringify(partyData)};
@@ -99,7 +106,7 @@ block content
         var height = legendRectSize + legendSpacing;
         var offset =  height * dataset.length / 1;
         var horz = -2 * legendRectSize;
-        var vert = i * height - offset;
+        var vert = i * height - offset + 10;
         return 'translate(' + horz + ',' + vert + ')';
       });
     legend.append('rect')
@@ -178,5 +185,31 @@ block content
       width: 80px;
       z-index: 10;
     }
+  
+    .axis path,
+    .axis line {
+      fill : none;
+      stroke : #000;
+      shape-rendering: crispEdges;
+    }
     
+    .bar {
+      fill : steelblue;
+    }
     
+    .x.axis path {
+      display : none;
+    }
+    
+    .y.axis {
+      font-size : 12px;
+    }
+    
+    .tick {
+      font-size : 12px;
+    }
+
+  script(src="/javascripts/coalition.js")
+  
+  script. 
+    createCoalitionDiagram(!{JSON.stringify(coalitions)}, !{JSON.stringify(partyData)});
