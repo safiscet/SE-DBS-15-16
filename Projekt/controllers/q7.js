@@ -38,15 +38,27 @@ exports.loadQ7 = function (req, res) {
         results.push(row);
       });
 
+      query.on('error', function(error){
+        errorTable.push(error);
+      });
+
       // Stream results back one row at a time
       query2.on('row', function(row) {
         erg.push(row);
+      });
+
+      query2.on('error', function(error){
+        errorTable.push(error);
       });
     }
 
     // Stream results back one row at a time
     query3.on('row', function(row) {
       wahlkreisForOption.push(row);
+    });
+
+    query3.on('error', function(error){
+      errorTable.push(error);
     });
 
     client.on('drain', function() {

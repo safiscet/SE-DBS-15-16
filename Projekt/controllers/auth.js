@@ -52,6 +52,12 @@ function loadData(req, res, pg, connectionString, id, birthday) {
       results.push(row);
     });
 
+    query.on('error', function(error){
+      done();
+      errorTable.push(error);
+      render(res, errorTable, kenString, gebString);
+    });
+
     query.on('end', function() {
       done();
       checkData(req, res, results, id, birthday);

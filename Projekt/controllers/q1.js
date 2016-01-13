@@ -3,6 +3,8 @@ exports.loadQ1 = function (req, res) {
   var pg = require('pg');
   var db = require('./db');
   var results = [];
+  var errorTable = [];
+  var coalitions;
   var year = 2013;
   var paramYear = req.params.year;
   if(paramYear == 2009 || paramYear == 2013)
@@ -18,6 +20,12 @@ exports.loadQ1 = function (req, res) {
     // SQL Query > Select Data
     var query = client.query("SELECT * FROM q1sitzverteilung" + year);
 
+    query.on('error', function(error){
+      done();
+      errorTable.push(error);
+      render();
+    });
+
     // Stream results back one row at a time
     query.on('row', function(row) {
       results.push(row);
@@ -26,17 +34,20 @@ exports.loadQ1 = function (req, res) {
     // After all data is returned, close connection and return results
     query.on('end', function() {
       done();
-      var coalitions = analyseCoalitions();
-      res.render('q1',
-      { title : 'Sitzverteilung',
-      year : year,
-      resTable : results,
-      partyData : results,
-      coalitions : coalitions
+      coalitions = analyseCoalitions();
+      render();
     });
   });
 
-});
+  function render(){
+    res.render('q1',
+    { title : 'Sitzverteilung',
+    year : year,
+    resTable : results,
+    errorTable : errorTable,
+    partyData : results,
+    coalitions : coalitions });
+  }
 
 function analyseCoalitions(){
   var parties = [];

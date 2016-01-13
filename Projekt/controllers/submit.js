@@ -75,7 +75,6 @@ exports.loadSubmit = function (req, res) {
     errorTable : errorTable });
   }
 
-
   function submitVote() {
 
     pg.connect(db.connectionString, function(err, client, done) {
@@ -85,25 +84,72 @@ exports.loadSubmit = function (req, res) {
         return res.status(500).json({ success: false, data: err});
       }
 
+      var rollback = function(client, error) {
+        client.query('ROLLBACK', function() {
+          client.end();
+          errorTable.push(error);
+          renderErrorMessage();
+        });
+      };
+
       // SQL Query > Insert Data
+
       if(erststimme == "noErststimme" && zweitstimme == "noZweitstimme" || erststimme == "noErststimme" && zweitstimme == null || erststimme == null && zweitstimme == "noZweitstimme"){
-        client.query("UPDATE elector SET vote2017=true WHERE id = $1", [electorID]);
-        console.log("ungültige Erst- und Zweitstimme");
+        client.query("BEGIN", function(err, result){
+          if(err) return rollback(client, err);
+          client.query("UPDATE elector SET vote2017=true WHERE id = $1", [electorID], function(err, result){
+            if(err) return rollback(client, err);
+            console.log("ungültige Erst- und Zweitstimme");
+            client.query("COMMIT", function(err, result){
+              if(err) return rollback(client, err);
+            });
+          });
+        })
       }
       else if(erststimme == "noErststimme" && zweitstimme != null){
-        client.query("UPDATE elector SET vote2017=true WHERE id = $1", [electorID]);
-        client.query("INSERT INTO vote (year, zweitstimme, wahlkreis) VALUES (2017, "+zweitstimme+", "+wahlkreisID+")");
-        console.log("ungültige Erststimme und gültige Zweitstimme");
+        client.query("BEGIN", function(err, result){
+          if(err) return rollback(client, err);
+          client.query("UPDATE elector SET vote2017=true WHERE id = $1", [electorID], function(err, result){
+            if(err) return rollback(client, err);
+            client.query("INSERT INTO vote (year, zweitstimme, wahlkreis) VALUES (2017, "+zweitstimme+", "+wahlkreisID+")", function(err, result){
+              if(err) return rollback(client, err);
+              console.log("ungültige Erststimme und gültige Zweitstimme");
+              client.query("COMMIT", function(err, result){
+                if(err) return rollback(client, err);
+              });
+            });
+          });
+        });
       }
       else if(zweitstimme == "noZweitstimme" && erststimme != null){
-        client.query("UPDATE elector SET vote2017=true WHERE id = $1", [electorID]);
-        client.query("INSERT INTO vote (year, erststimme, wahlkreis) VALUES (2017, "+erststimme+", "+wahlkreisID+")");
-        console.log("gültige Erststimme und ungültige Zweitstimme");
+        client.query("BEGIN", function(err, result){
+          if(err) return rollback(client, err);
+          client.query("UPDATE elector SET vote2017=true WHERE id = $1", [electorID], function(err, result){
+            if(err) return rollback(client, err);
+            client.query("INSERT INTO vote (year, erststimme, wahlkreis) VALUES (2017, "+erststimme+", "+wahlkreisID+")", function(err, result){
+              if(err) return rollback(client, err);
+              console.log("gültige Erststimme und ungültige Zweitstimme");
+              client.query("COMMIT", function(err, result){
+                if(err) return rollback(client, err);
+              });
+            });
+          });
+        });
       }
       else if(erststimme != null && zweitstimme != null){
-        client.query("UPDATE elector SET vote2017=true WHERE id = $1", [electorID]);
-        client.query("INSERT INTO vote (year, erststimme, zweitstimme, wahlkreis) VALUES (2017, "+erststimme+", "+zweitstimme+", "+wahlkreisID+")");
-        console.log("gültige Erst- und Zweitstimme")
+        client.query("BEGIN", function(err, result){
+          if(err) return rollback(client, err);
+          client.query("UPDATE elector SET vote2017=true WHERE id = $1", [electorID], function(err, result){
+            if(err) return rollback(client, err);
+            client.query("INSERT INTO vote (year, erststimme, zweitstimme, wahlkreis) VALUES (2017, "+erststimme+", "+zweitstimme+", "+wahlkreisID+")", function(err, result){
+              if(err) return rollback(client, err);
+              console.log("gültige Erst- und Zweitstimme");
+              client.query("COMMIT", function(err, result){
+                if(err) return rollback(client, err);
+              });
+            });
+          });
+        });
       }
 
       console.log("Ihre Stimme für die Wahl wurde erfolgreich abgeben");

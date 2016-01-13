@@ -13,6 +13,9 @@ block content
   
 
   .main-results.col-md-4 
+    each value in errorTable
+      .alert.alert-danger= value
+    
     table.table.table-striped
       thead
         tr
