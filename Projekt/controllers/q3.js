@@ -14,7 +14,7 @@ exports.loadQ3 = function (req, res) {
     year = paramYear;
 
   var wahlkreisId = req.params.wahlkreisId;
-  console.log(wahlkreisId);
+  var wahlkreisInt;
 
   pg.connect(db.connectionString, function(err, client, done) {
     if(err) {
@@ -31,12 +31,12 @@ exports.loadQ3 = function (req, res) {
       //var query = client.query("SELECT * FROM q3wahlkreisuebersicht2013");
       //var query2 = client.query("SELECT q13.wahlkreis, q13.party, q13.zweitstimmenabsolute, q13.zweitstimmenpercent, q9.zweitstimmenabsolute2009, q9.zweitstimmenpercent2009 FROM q3wahlkreisparty2013 q13 JOIN q3wahlkreisparty2009 q9 ON q13.wahlkreis = q9.wahlkreis WHERE q13.party = q9.party");
     } else {
-      var wahlkreisInt = parseInt(wahlkreisId);
-      console.log(wahlkreisInt);
+      wahlkreisInt = parseInt(wahlkreisId);
       if(isNaN(wahlkreisInt) || wahlkreisInt < 1 || wahlkreisInt > 299){
         wahlkreisInt = 1;
         errorTable.push("Der gewählte Wahlkreis existiert nicht. Es werden Beispiel-Ergebnisse für Flensburg - Schleswig angezeigt.");
       }
+      wahlkreisId = "" + wahlkreisInt;
       var query = client.query("SELECT * FROM q3wahlkreisuebersicht"+year+" WHERE nummer = $1", [wahlkreisInt]);
       //var query2 = client.query("SELECT q13.wahlkreis, q13.party, q13.zweitstimmenabsolute, q13.zweitstimmenpercent, q9.zweitstimmenabsolute2009, q9.zweitstimmenpercent2009 FROM q3wahlkreisparty2013 q13 JOIN q3wahlkreisparty2009 q9 ON q13.wahlkreis = q9.wahlkreis JOIN wahlkreis w ON w.name = q13.wahlkreis WHERE q13.party = q9.party AND w.id = $1", [wahlkreisInt]);
 
@@ -84,13 +84,15 @@ exports.loadQ3 = function (req, res) {
 
     client.on('drain', function() {
       done();
-
+      if(wahlkreisId == undefined)
+        wahlkreisId = "";
       res.render('q3',
       { title : 'Wahlkreisübersicht',
         year : year,
         optionTable : wahlkreisForOption,
         errorTable : errorTable,
         federallandOptionTable: federallandForOption,
+        wahlkreisId : wahlkreisId,
         ergTable : erg,
         resTable : results
       });

@@ -4,9 +4,9 @@ block content
       h1 Wahlkreisübersicht #{year}
       
     .btn-group
-      a(href="/q3/2009/")
+      a(href="/q3/2009/#{wahlkreisId}")
         button.btn.btn-primary.btn-lg(type="button") 2009
-      a(href="/q3/2013/")
+      a(href="/q3/2013/#{wahlkreisId}")
         button.btn.btn-primary.btn-lg(type="button") 2013
 
     .main-results
@@ -114,9 +114,9 @@ block content
                           this.innerHTML = "----";
                         } else {
                           if(#{year} == 2013){
-                            this.innerHTML = (($percentage2013).substring(1, 5) - ($percentage2009).substring(1, 5)).toFixed(2) + " %";
+                            this.innerHTML = (($percentage2013).substring(0, 5) - ($percentage2009).substring(0, 5)).toFixed(2) + " %";
                           } else if(#{year} == 2009) {
-                            this.innerHTML = (($percentage2009).substring(1, 5) - ($percentage2013).substring(1, 5)).toFixed(2) + " %";
+                            this.innerHTML = (($percentage2009).substring(0, 5) - ($percentage2013).substring(0, 5)).toFixed(2) + " %";
                           }
                           if(this.innerHTML.contains("-")){
                             this.style.color = "red";
