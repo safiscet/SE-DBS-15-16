@@ -23,6 +23,13 @@ block content
           tr
             th= value.party
             th= value.seats
+        tr
+          th= ""
+          th= ""
+        each value, index in sumTable
+          tr
+            th= "Insgesamt"
+            th= value.sum
             
   .chart.col-md-8
   
