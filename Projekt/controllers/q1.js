@@ -41,15 +41,6 @@ exports.loadQ1 = function (req, res) {
     // After all data is returned, close connection and return results
     client.on('drain', function() {
       done();
-
-      var coalitions = analyseCoalitions();
-      res.render('q1',
-      { title : 'Sitzverteilung',
-      year : year,
-      resTable : results,
-      sumTable: resultsSum,
-      partyData : results,
-      coalitions : coalitions
       coalitions = analyseCoalitions();
       render();
     });
@@ -60,6 +51,7 @@ exports.loadQ1 = function (req, res) {
     { title : 'Sitzverteilung',
     year : year,
     resTable : results,
+    sumTable: resultsSum,
     errorTable : errorTable,
     partyData : results,
     coalitions : coalitions });
