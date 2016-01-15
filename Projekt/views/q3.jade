@@ -42,21 +42,21 @@ block content
       table.table.table-striped(id= "table2")
         thead
           tr
-            //th Wahlkreis
             th Partei
-            th Anzahl der Zweitstimmen 2013
             th Anzahl der Zweitstimmen 2009
-            th Prozent der Zweitstimmen 2013
+            th Anzahl der Zweitstimmen 2013
             th Prozent der Zweitstimmen 2009
+            th Prozent der Zweitstimmen 2013
+            th(id= "comparisoncolumn")
         tbody(id= "body2")
           each value, index in ergTable 
             tr
-              //th= value.wahlkreis
               th= value.party
-              th= value.zweitstimmenabsolute
-              th= value.zweitstimmenabsolute2009
-              th= ((value.zweitstimmenpercent)*100).toFixed(2) + " %"
-              th= ((value.zweitstimmenpercent2009)*100).toFixed(2) + " %"
+              th(name= "absolute2009")= value.zweitstimmenabsolute2009
+              th(name= "absolute2013")= value.zweitstimmenabsolute
+              th(name= "percent2009")= ((value.zweitstimmenpercent2009)*100).toFixed(2) + " %"
+              th(name= "percent2013")= ((value.zweitstimmenpercent)*100).toFixed(2) + " %"
+              th(name= "comparison")= ""
             
       script.
         $(document).ready(function(){
@@ -65,6 +65,72 @@ block content
             document.getElementById("table1").style.display = "none";
             document.getElementById("table2").style.display = "none";
           }
+          
+          if(#{year} == 2009){
+            document.getElementById("comparisoncolumn").innerHTML = "Vergleich zum Jahr 2013";
+          } else if(#{year} == 2013){
+            document.getElementById("comparisoncolumn").innerHTML = "Vergleich zum Jahr 2009";
+          }
+                    
+          // if a party has not participated in one election, this is marked with "-" in the absolute and the percentage field          
+          $(document.getElementById("body2").rows).each(function() {
+            $rowNumber = this.rowIndex;
+            $(document.getElementsByName("absolute2009")).each(function() {
+              if(this.parentNode.rowIndex == $rowNumber && this.innerHTML == ""){
+                this.innerHTML = "----";
+                $(document.getElementsByName("percent2009")).each(function(){
+                    if(this.parentNode.rowIndex == $rowNumber){
+                      this.innerHTML = "----";
+                    }
+                  });
+              } 
+            }); 
+            
+            $(document.getElementsByName("absolute2013")).each(function() {
+              if(this.parentNode.rowIndex == $rowNumber && this.innerHTML == ""){
+                this.innerHTML = "----";
+                $(document.getElementsByName("percent2013")).each(function(){
+                    if(this.parentNode.rowIndex == $rowNumber){
+                      this.innerHTML = "----";
+                    }
+                  });
+              } 
+            });   
+            
+          });
+          
+          // fill the comparison column with the right difference and color it          
+          $(document.getElementById("body2").rows).each(function() {
+            $rowNumber = this.rowIndex;
+            $(document.getElementsByName("percent2013")).each(function() {
+              if(this.parentNode.rowIndex == $rowNumber){
+                $percentage2013 = this.innerHTML;
+                $(document.getElementsByName("percent2009")).each(function() {
+                  if(this.parentNode.rowIndex == $rowNumber){
+                    $percentage2009 = this.innerHTML;
+                    $(document.getElementsByName("comparison")).each(function() {
+                      if(this.parentNode.rowIndex == $rowNumber){
+                        if($percentage2009 == "----" || $percentage2013 == "----"){
+                          this.innerHTML = "----";
+                        } else {
+                          if(#{year} == 2013){
+                            this.innerHTML = (($percentage2013).substring(1, 5) - ($percentage2009).substring(1, 5)).toFixed(2) + " %";
+                          } else if(#{year} == 2009) {
+                            this.innerHTML = (($percentage2009).substring(1, 5) - ($percentage2013).substring(1, 5)).toFixed(2) + " %";
+                          }
+                          if(this.innerHTML.contains("-")){
+                            this.style.color = "red";
+                          } else {
+                            this.style.color = "green";
+                          }
+                        }
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          });
         });
         
         function updateSelection(nummer){
