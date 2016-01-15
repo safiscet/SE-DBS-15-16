@@ -4,6 +4,8 @@ exports.loadQ1 = function (req, res) {
   var db = require('./db');
   var results = [];
   var resultsSum = [];
+  var errorTable = [];
+  var coalitions;
   var year = 2013;
   var paramYear = req.params.year;
   if(paramYear == 2009 || paramYear == 2013)
@@ -19,6 +21,12 @@ exports.loadQ1 = function (req, res) {
     // SQL Query > Select Data
     var query = client.query("SELECT * FROM q1sitzverteilung" + year);
     var query2 = client.query("SELECT sum(seats) as sum FROM q1sitzverteilung" + year);
+
+    query.on('error', function(error){
+      done();
+      errorTable.push(error);
+      render();
+    });
 
     // Stream results back one row at a time
     query.on('row', function(row) {
@@ -42,10 +50,20 @@ exports.loadQ1 = function (req, res) {
       sumTable: resultsSum,
       partyData : results,
       coalitions : coalitions
+      coalitions = analyseCoalitions();
+      render();
     });
   });
 
-});
+  function render(){
+    res.render('q1',
+    { title : 'Sitzverteilung',
+    year : year,
+    resTable : results,
+    errorTable : errorTable,
+    partyData : results,
+    coalitions : coalitions });
+  }
 
 function analyseCoalitions(){
   var parties = [];

@@ -3,6 +3,7 @@ exports.loadQ2 = function (req, res) {
   var pg = require('pg');
   var db = require('./db');
   var results = [];
+  var errorTable = [];
   var year = 2013;
   var paramYear = req.params.year;
   if(paramYear == 2009 || paramYear == 2013)
@@ -23,13 +24,24 @@ exports.loadQ2 = function (req, res) {
       results.push(row);
     });
 
+    query.on('error', function(error){
+      done();
+      errorTable.push(error);
+      render();
+    });
+
     // After all data is returned, close connection and return results
     query.on('end', function() {
       done();
-      res.render('q2',
-      { title : 'Mitglieder des Bundestags',
-        year : year,
-      resTable : results});
+      render();
     });
   });
+
+  function render() {
+    res.render('q2',
+    { title : 'Mitglieder des Bundestags',
+      year : year,
+      errorTable : errorTable,
+    resTable : results});
+  }
 };

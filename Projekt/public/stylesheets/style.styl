@@ -24,17 +24,36 @@ body
 
 header
   font-family sans-serif, Helvetica, Arial
-  padding 50px 10px
-  color #fff
-  font-size 35px
+  padding 20px 10px
   text-align center
+  color #fff
   background-color main-color
   border-bottom 1px solid darken(main-color, 30%)
   text-shadow 0px -1px 0px darken(main-color, 30%)
 
-  a
-    text-decoration: none
-    color: #fff
+
+  .header-div
+
+    position: relative
+    top: -45px
+
+    img#adler
+      width: 100px
+      margin: 20px 40px
+      position: relative
+      top: 50px
+
+    a
+      text-decoration: none
+      color: #fff
+      font-size 35px
+      line-height: 60px
+
+    #header-link
+      text-decoration none
+
+    #header-link:hover
+      color #87c2ff
 
 .sidebar
   margin-top 20px
@@ -75,18 +94,18 @@ button
 select
   margin-bottom 20px
 
-#header-link
-  text-decoration none
-
-#header-link:hover
-  color #87c2ff
-
 footer
   //background-color: #555;
   //color: white;
   border-top 1px dotted #ccc
   margin 50px auto
   padding: 15px;
+
+  img#flag
+    float: right
+    position: relative
+    top: -60px
+    width: 60px
 
 .table tbody tr:hover td, .table tbody tr:hover th
   background-color: table-hover-color

@@ -61,6 +61,12 @@ exports.loadVote = function (req, res) {
         results.push(row);
       });
 
+      query.on('error', function(error){
+        done();
+        errorTable.push(error);
+        render(res, errorTable, kenString, gebString);
+      });
+
       query.on('end', function() {
         done();
         checkData(req, res, results, kennung, geburtsdatum);
@@ -88,6 +94,10 @@ exports.loadVote = function (req, res) {
         //- Stream results back one row at a time
         query.on('row', function(row) {
           results2.push(row);
+        });
+
+        query.on('error', function(error){
+          errorTable.push(error);
         });
 
         client.on('drain', function() {

@@ -2,6 +2,7 @@ exports.loadQ6 = function (req, res) {
   var pg = require('pg');
   var db = require('./db');
   var results = [];
+  var errorTable = [];
   var parties = [];
   var partySelected = false;
 
@@ -29,16 +30,23 @@ exports.loadQ6 = function (req, res) {
       query.on('row', function(row) {
         results.push(row);
       });
+
+      query.on('error', function(error){
+        errorTable.push(error);
+      });
     }
 
     query2.on('row', function(row) {
       parties.push(row);
     });
 
+    query2.on('error', function(error){
+      errorTable.push(error);
+    });
+
     // After all data is returned, close connection and return results
     client.on('drain', function() {
       done();
-      var errorTable = [];
       if(results.length == 0 && partySelected)
         errorTable.push("Die gewählte Partei ist in diesem Jahr nicht angetreten oder existiert nicht.");
       res.render('q6',

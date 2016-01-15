@@ -47,9 +47,17 @@ exports.loadQ3 = function (req, res) {
         results.push(row);
       });
 
+      query.on('error', function(error){
+        errorTable.push(error);
+      });
+
       // Stream results back one row at a time
       query2.on('row', function(row) {
         erg.push(row);
+      });
+
+      query2.on('error', function(error){
+        errorTable.push(error);
       });
     }
 
@@ -60,9 +68,17 @@ exports.loadQ3 = function (req, res) {
       wahlkreisForOption.push(row);
     });
 
+    query3.on('error', function(error){
+      errorTable.push(error);
+    });
+
     // Stream results back one row at a time
     query4.on('row', function(row) {
       federallandForOption.push(row);
+    });
+
+    query4.on('error', function(error){
+      errorTable.push(error);
     });
 
 
