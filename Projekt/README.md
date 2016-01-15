@@ -4,10 +4,10 @@
 * Install node.js Version 4.2.2 (x86).
   * node package manger (npm) should be integrated in the installer.
 * Navigate to the project directory (/Projekt) via command line.
-* Execute 'npm install'.
-  * This will install all modules needed.
-  * The modules are specified in the dependencies section in package.json.
-* Execute 'node server.js' or 'npm start' to start the application server
+* Execute `npm install`.
+  * This will install all needed modules.
+  * The modules are specified in the dependencies section in the package.json file.
+* Execute `node server.js` or `npm start` to start the application server
 * The site can be accessed via http://127.0.0.1:8080/ or http://localhost:8080/.
 * All registered invocations will be logged to the console output (e.g. for debugging information).
 
@@ -19,6 +19,11 @@
 * [Nib](https://github.com/tj/nib) (Stylus mixins, utilities, ...)
 * [morgan](https://www.npmjs.com/package/morgan) (Logging)
 * [pg](https://github.com/brianc/node-postgres) (PostgreSQL client for node.js)
+* [connect-timeout](https://github.com/expressjs/timeout) (timeouts in express)
+* [body-parser](https://github.com/expressjs/body-parser) (body parsing middleware)
+* [connect-flash](https://github.com/jaredhanson/connect-flash) (session messages)
+* [cookie-parser](https://www.npmjs.com/package/cookie-parser) (cookie parsing with signatures)
+* [express-session](https://github.com/expressjs/session) (session middleware for express)
 
 ## Useful Editor
 * Atom (e.g. with the following packages)
@@ -31,5 +36,5 @@
   * source-preview
   * source-preview-jade
 
-  ## Miscellaneous
+## Miscellaneous
   * [Jade-Tutorial](http://webapplog.com/jade/)
