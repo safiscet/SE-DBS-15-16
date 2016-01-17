@@ -46,9 +46,9 @@ block content
             th ungültige Stimme
             th
 
-      button.btn.btn-default.vote(name= "submitButton" type="submit" value="Submit") Stimme abgeben
+      button.btn.btn-default.vote(id= "submitButton" name= "submitButton" type="submit" value="Submit") Stimme abgeben
       
-    button.btn.btn-default.vote(type= button, onclick="window.location='/'") Zurück
+    button.btn.btn-default.vote(id= "goBack" type= button, onclick="window.location='/'") Zurück
     
     script.
       $(document).ready(function(){

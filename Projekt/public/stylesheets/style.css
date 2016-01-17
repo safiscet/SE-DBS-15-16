@@ -170,6 +170,34 @@ button.vote {
 button {
   margin-right: 20px;
 }
+button#submitButton {
+  height: 45px;
+  width: 200px;
+  margin-left: 0px;
+  text-align: center;
+  font-size: 18px;
+  background-color: #2e64fe;
+  color: #fff;
+}
+button#goBack {
+  height: 35px;
+  width: 200px;
+  margin: 20px;
+  margin-left: 630px;
+  text-align: center;
+  font-size: 15px;
+  background-color: #2e64fe;
+  color: #fff;
+}
+button#submitted {
+  height: 45px;
+  width: 150px;
+  margin: 20px;
+  text-align: center;
+  font-size: 18px;
+  background-color: #2e64fe;
+  color: #fff;
+}
 select {
   margin-bottom: 20px;
 }
