@@ -265,7 +265,7 @@
             <stringProp name="HTTPSampler.response_timeout" />
             <stringProp name="HTTPSampler.protocol" />
             <stringProp name="HTTPSampler.contentEncoding" />
-            <stringProp name="HTTPSampler.path">/q1/</stringProp>
+            <stringProp name="HTTPSampler.path">/q1/2013/</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -297,7 +297,7 @@
             <stringProp name="HTTPSampler.response_timeout" />
             <stringProp name="HTTPSampler.protocol" />
             <stringProp name="HTTPSampler.contentEncoding" />
-            <stringProp name="HTTPSampler.path">/q2/</stringProp>
+            <stringProp name="HTTPSampler.path">/q2/2013/</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -329,7 +329,7 @@
             <stringProp name="HTTPSampler.response_timeout" />
             <stringProp name="HTTPSampler.protocol" />
             <stringProp name="HTTPSampler.contentEncoding" />
-            <stringProp name="HTTPSampler.path">/q3/${WahlkreisID}</stringProp>
+            <stringProp name="HTTPSampler.path">/q3/2013/${WahlkreisID}</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -371,7 +371,7 @@
             <stringProp name="HTTPSampler.response_timeout" />
             <stringProp name="HTTPSampler.protocol" />
             <stringProp name="HTTPSampler.contentEncoding" />
-            <stringProp name="HTTPSampler.path">/q4/</stringProp>
+            <stringProp name="HTTPSampler.path">/q4/2013/</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -403,7 +403,7 @@
             <stringProp name="HTTPSampler.response_timeout" />
             <stringProp name="HTTPSampler.protocol" />
             <stringProp name="HTTPSampler.contentEncoding" />
-            <stringProp name="HTTPSampler.path">/q5/</stringProp>
+            <stringProp name="HTTPSampler.path">/q5/2013/</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -435,7 +435,7 @@
             <stringProp name="HTTPSampler.response_timeout" />
             <stringProp name="HTTPSampler.protocol" />
             <stringProp name="HTTPSampler.contentEncoding" />
-            <stringProp name="HTTPSampler.path">/q6/11</stringProp>
+            <stringProp name="HTTPSampler.path">/q6/2013/11</stringProp>
             <stringProp name="HTTPSampler.method">GET</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
